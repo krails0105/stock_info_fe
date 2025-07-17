@@ -32,16 +32,18 @@
 
 /* src/index.css */
 body {
-  margin: 0;
+  /* 1. 브라우저의 기본 마진을 제거 (CSS 초기화) */
+  margin: 0; 
+  
+  /* 2. 앱 전체의 기본 글꼴을 시스템 폰트로 지정 (전역 스타일) */
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
+    
+  /* 3. 앱의 기본 배경색을 지정 (전역 스타일) */
+  background-color: #f4f4f5;
+
+  /* 글자를 부드럽게 렌더링하는 속성 */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f4f4f5;
-}
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
 }
