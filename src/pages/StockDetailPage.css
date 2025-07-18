@@ -1,0 +1,75 @@
+/* src/pages/StockDetailPage.css */
+
+.stock-detail-container {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .stock-title {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    border-bottom: 2px solid #eee;
+    padding-bottom: 16px;
+    margin-bottom: 20px;
+  }
+  
+  .stock-title h2 {
+    margin: 0;
+    font-size: 28px;
+  }
+  
+  .stock-code {
+    font-size: 16px;
+    color: #888;
+  }
+  
+  .stock-metrics {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 30px;
+  }
+  
+  .metric-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+  }
+  
+  .metric-label {
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .metric-value {
+    font-weight: bold;
+    color: #000;
+  }
+  
+  .news-section h3 {
+    margin-bottom: 10px;
+  }
+  
+  .news-list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .news-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  
+  .news-list a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  .news-list a:hover {
+    text-decoration: underline;
+  }
