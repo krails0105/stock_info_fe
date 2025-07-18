@@ -17,6 +17,7 @@ function App() {
           예를 들어 "/stock/005930"처럼 접근할 때 "005930"이 stockCode로 전달됩니다.
           useParams() 훅을 사용하면 이 값을 컴포넌트에서 읽을 수 있습니다.
         */}
+        
         <Route path="/stock/:stockCode" element={<StockDetailPage />} />
       </Routes>
     </div>
