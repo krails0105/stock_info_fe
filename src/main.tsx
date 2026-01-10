@@ -21,7 +21,7 @@
  *    - BrowserRouter는 SPA(Single Page Application)에서 URL을 관리하고, 라우팅 기능을 제공합니다.
  * 
  * 6. ReactDOM.createRoot(document.getElementById('root')!).render(...)
- *    - public/index.html에 있는 id가 'root'인 DOM 요소에 React 앱을 마운트합니다.
+ *    - 프로젝트 루트의 index.html에 있는 id가 'root'인 DOM 요소에 React 앱을 마운트합니다.
  *    - createRoot를 사용하면 React 18의 새로운 기능(동시성 등)을 사용할 수 있습니다.
  *    - render 함수 안에서 <React.StrictMode>로 감싸 개발 중 잠재적인 문제를 감지할 수 있습니다.
  *    - <BrowserRouter>로 <App />을 감싸서 라우팅 기능을 사용할 수 있게 합니다.

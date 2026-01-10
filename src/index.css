@@ -1,49 +1,38 @@
-/* @tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* src/index.css - Global Styles */
 
-@layer base {
-  body {
-    @apply bg-gray-50 text-gray-900;
-  }
+* {
+  box-sizing: border-box;
 }
 
-@layer components {
-  .btn-primary {
-    @apply bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors;
-  }
-  
-  .card {
-    @apply bg-white rounded-lg shadow-md p-6 border border-gray-200;
-  }
-  
-  .stock-up {
-    @apply text-red-600 font-semibold;
-  }
-  
-  .stock-down {
-    @apply text-blue-600 font-semibold;
-  }
-  
-  .stock-neutral {
-    @apply text-gray-600 font-semibold;
-  }
-} */
-
-/* src/index.css */
 body {
-  /* 1. 브라우저의 기본 마진을 제거 (CSS 초기화) */
-  margin: 0; 
-  
-  /* 2. 앱 전체의 기본 글꼴을 시스템 폰트로 지정 (전역 스타일) */
+  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-    
-  /* 3. 앱의 기본 배경색을 지정 (전역 스타일) */
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   background-color: #f4f4f5;
-
-  /* 글자를 부드럽게 렌더링하는 속성 */
+  color: #111827;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: inherit;
+}
+
+/* 스크롤바 스타일 (웹킷 기반 브라우저) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
 }
