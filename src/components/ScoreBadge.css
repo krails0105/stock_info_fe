@@ -1,0 +1,58 @@
+/* src/components/ScoreBadge.css */
+
+.score-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.score-badge--sm {
+  padding: 4px 8px;
+  font-size: 12px;
+  gap: 4px;
+}
+
+.score-badge--md {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+.score-badge--lg {
+  padding: 8px 16px;
+  font-size: 16px;
+}
+
+.score-badge__score {
+  font-weight: 700;
+}
+
+.score-badge__label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.score-badge__icon {
+  font-size: 10px;
+}
+
+/* STRONG - 강세 (초록) */
+.score-badge--strong {
+  background: #dcfce7;
+  color: #16a34a;
+}
+
+/* NEUTRAL - 보통 (노랑) */
+.score-badge--neutral {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+/* WEAK - 약세 (빨강) */
+.score-badge--weak {
+  background: #fee2e2;
+  color: #dc2626;
+}
