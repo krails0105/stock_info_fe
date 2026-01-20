@@ -69,22 +69,30 @@ export interface SectorScoreboardResponse {
 // ------------------------------------------------------------
 // 📉 종목 점수 타입
 // ------------------------------------------------------------
+// 백엔드 API 응답 형식:
+// {
+//   "code": "000210",
+//   "name": "DL",
+//   "score": 43,
+//   "label": "NEUTRAL",
+//   "price": 36450,
+//   "changeRate": "-0.68%",
+//   "market": "KOSPI",
+//   "sectorName": "화학"
+// }
 export interface StockScore {
   code: string;             // 종목 코드 (예: "005930")
   name: string;             // 종목명 (예: "삼성전자")
-  sectorId?: string;        // 소속 섹터 ID
-  sectorName: string;       // 소속 섹터명
   score: number;            // 점수 0~100
-  label: ScoreLabel;        // 라벨
-  reasons: string[];        // 이유 3줄
+  label: ScoreLabel;        // 라벨: STRONG/NEUTRAL/WEAK
   price: number;            // 현재가
-  priceChange?: string;     // 등락률 문자열 (예: "+2.5%")
-  change?: number;          // 등락폭 (숫자)
-  changePercent?: number;   // 등락률 (숫자)
-  returnGrade?: string;     // 수익률 등급 (예: "높음")
-  valuationGrade?: string;  // 밸류에이션 등급 (예: "저평가")
-  volumeGrade?: string;     // 거래량 등급 (예: "증가")
-  sectorScore?: number;     // 소속 섹터 점수
+  changeRate: string;       // 등락률 문자열 (예: "-0.68%", "+2.5%")
+  market: string;           // 시장 (예: "KOSPI", "KOSDAQ")
+  sectorName: string;       // 소속 섹터명
+
+  // 선택적 속성들 (상세 페이지에서 사용)
+  sectorId?: string;        // 소속 섹터 ID
+  reasons?: string[];       // 이유 3줄
   per?: number;             // PER (주가수익비율)
   pbr?: number;             // PBR (주가순자산비율)
   headlines?: NewsItem[];   // 관련 뉴스
@@ -100,15 +108,32 @@ export interface StockScoreboardResponse {
 }
 
 // ------------------------------------------------------------
-// 📝 종목 상세 정보 타입
+// 📝 종목 상세 정보 타입 (KrxStockFinancialItem 기반)
 // ------------------------------------------------------------
-// 'extends'는 상속입니다.
-// StockDetail은 StockScore의 모든 속성을 가지고, 추가로 아래 속성들도 가집니다.
-export interface StockDetail extends StockScore {
-  volume?: number;          // 거래량
-  marketCap?: number;       // 시가총액
-  high52w?: number;         // 52주 최고가
-  low52w?: number;          // 52주 최저가
+// 백엔드 KrxStockFinancialItem DTO와 1:1 매핑
+// KRX(한국거래소) CSV 다운로드 API 응답 형식
+// [CSV 컬럼] 종목코드,종목명,종가,대비,등락률,EPS,PER,선행EPS,선행PER,BPS,PBR,주당배당금,배당수익률
+export interface StockDetail {
+  // === 기본 정보 ===
+  stockCode: string;        // 종목코드 (예: "005930")
+  stockName: string;        // 종목명 (예: "삼성전자")
+  closingPrice: number;     // 종가 (단위: 원)
+  priceChange: number;      // 대비 (전일 대비 가격 변동, 단위: 원)
+  changeRate: number;       // 등락률 (%, 예: 2.5, -1.3)
+
+  // === 수익 지표 ===
+  eps: number;              // EPS - 주당순이익 (Earnings Per Share, 단위: 원)
+  per: number;              // PER - 주가수익비율 (Price Earnings Ratio)
+  forwardEps: number;       // 선행 EPS - 예상 주당순이익 (Forward EPS, 단위: 원)
+  forwardPer: number;       // 선행 PER - 예상 주가수익비율 (Forward PER)
+
+  // === 자산 지표 ===
+  bps: number;              // BPS - 주당순자산 (Book-value Per Share, 단위: 원)
+  pbr: number;              // PBR - 주가순자산비율 (Price Book-value Ratio)
+
+  // === 배당 정보 ===
+  dividendPerShare: number; // 주당배당금 (단위: 원)
+  dividendYield: number;    // 배당수익률 (%, 예: 2.1)
 }
 
 // ------------------------------------------------------------

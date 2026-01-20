@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Korean stock information web application for stock market beginners. Displays real-time market indices (KOSPI, KOSDAQ, KRX100), sector-based stock browsing, and detailed stock information with news.
+Korean stock information web application for stock market beginners. Displays real-time market indices (KOSPI, KOSDAQ, KRX100), sector-based stock browsing, and detailed stock information with financial metrics.
 
 ## Commands
 
@@ -26,21 +26,21 @@ npm run preview   # Preview production build
 ## Architecture
 
 **Routing (App.tsx):**
-- `/` → HomePage (market indices + sector list + stock list)
-- `/stock/:stockCode` → StockDetailPage (stock details + news)
+- `/` → HomePage (market indices + sector list)
+- `/sector/:sectorName` → SectorDetailPage (sector stocks)
+- `/stock/:stockCode` → StockDetailPage (financial metrics)
 
 **API Layer (src/services/api.ts):**
-- Axios instance with base URL from `REACT_APP_API_URL` (default: `http://localhost:8080/api`)
+- Axios instance with base URL from `VITE_API_URL` (default: `http://localhost:8080/api`)
 - Auto-attaches Bearer token from localStorage
 - 401 responses clear token and redirect to login
-- Types defined: `MarketIndex`, `Sector`, `Stock`, `News`
 
-**Key Endpoints:**
-- `GET /api/indices` - Market indices
-- `GET /api/sectors` - Available sectors
-- `GET /api/stocks` - Stock list (optional sector filter)
-- `GET /api/stocks/:code` - Stock detail
-- `GET /api/news` - News articles
+**Key API Functions:**
+- `getMarketSummary()` - Market indices (KOSPI, KOSDAQ, etc.)
+- `getSectorScoreboard()` - Sector list with scores
+- `getStockScoreboard(sectorName)` - Stocks by sector
+- `getStockDetail(code)` - Stock financial metrics (KrxStockFinancialItem)
+- `getNews(params)` - News articles
 
 **State Management:**
 - React local state (useState/useEffect) per component
@@ -50,15 +50,37 @@ npm run preview   # Preview production build
 
 ```
 src/
-├── components/      # Reusable components (IndexCard, SectorList, StockList, etc.)
-├── pages/           # Page components (HomePage, StockDetailPage)
-├── services/api.ts  # Axios config + API functions + types
+├── components/      # Reusable components
+│   ├── MarketSummaryBar.tsx   # Market indices display
+│   ├── SectorCard.tsx         # Sector score card
+│   ├── SectorListGrid.tsx     # Sector grid layout
+│   ├── StockRankingTable.tsx  # Stock list table
+│   └── ScoreBadge.tsx         # Score label component
+├── pages/
+│   ├── HomePage.tsx           # Main page
+│   ├── SectorDetailPage.tsx   # Sector stocks page
+│   └── StockDetailPage.tsx    # Stock financial metrics page
+├── services/api.ts  # Axios config + API functions
+├── types/index.ts   # TypeScript type definitions
+├── mocks/data.ts    # Mock data for development
 ├── App.tsx          # Route definitions
 └── main.tsx         # Entry point with BrowserRouter
 ```
 
+## Key Types (src/types/index.ts)
+
+**StockDetail (KrxStockFinancialItem 기반):**
+- 기본 정보: stockCode, stockName, closingPrice, priceChange, changeRate
+- 수익 지표: eps, per, forwardEps, forwardPer
+- 자산 지표: bps, pbr
+- 배당 정보: dividendPerShare, dividendYield
+
+**StockScore:** 종목 점수 정보 (score, label, reasons)
+**SectorScore:** 섹터 점수 정보
+
 ## Styling Conventions
 
 - Component-specific CSS files alongside components
-- Tailwind utilities for responsive design
-- Color scheme: Red (#d32f2f) for price up, Blue (#1976d2) for price down
+- Consistent card style: `border-radius: 12px`, `box-shadow: 0 1px 3px rgba(0,0,0,0.08)`
+- Hover effect: `transform: translateY(-2px)`
+- Color scheme: Red (#dc2626) for price up, Blue (#2563eb) for price down

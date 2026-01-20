@@ -24,7 +24,7 @@ import type {
 } from '../types';
 
 // Mock 데이터 가져오기 (백엔드에 없는 API용)
-import { mockMarketSummary, mockStocksBySector } from '../mocks/data';
+import { mockMarketSummary } from '../mocks/data';
 
 // ------------------------------------------------------------
 // ⚙️ 설정
@@ -160,46 +160,48 @@ export async function getSectorScoreboard(): Promise<SectorScoreboardResponse> {
  * 현재 백엔드에 엔드포인트가 없어서 Mock 데이터 사용
  */
 export async function getStockScoreboard(sectorName: string): Promise<StockScoreboardResponse> {
-  // TODO: 백엔드에 /api/sectors/:id/stocks 구현 시 아래 주석 해제
-  // const response = await api.get(`/sectors/${encodeURIComponent(sectorName)}/stocks`);
-  // return response.data;
-
-  // Mock 데이터에서 해당 섹터의 종목 가져오기
-  // || []: 없으면 빈 배열
-  const stocks = mockStocksBySector[sectorName] || [];
-
-  return Promise.resolve({
+  const response = await api.get(`/sectors/${encodeURIComponent(sectorName)}/stocks`);
+  return {
     sectorName,
     updatedAt: new Date().toISOString(),
-    stocks,
-  });
+    stocks: response.data,
+  };
 }
 
 // ------------------------------------------------------------
-// 종목 상세 조회
+// 종목 상세 조회 (KrxStockFinancialItem 기반)
 // ------------------------------------------------------------
 /**
- * 특정 종목의 상세 정보를 가져옵니다
+ * 특정 종목의 재무지표 정보를 가져옵니다
  *
  * @param code - 종목 코드 (예: "005930")
+ *
+ * 백엔드 KrxStockFinancialItem 응답 형식:
+ * - stockCode, stockName, closingPrice, priceChange, changeRate
+ * - eps, per, forwardEps, forwardPer
+ * - bps, pbr
+ * - dividendPerShare, dividendYield
  */
 export async function getStockDetail(code: string): Promise<StockDetail> {
   // 백엔드 API 호출
   const response = await api.get(`/stocks/${code}`);
   const data = response.data;
 
-  // 백엔드 응답을 프론트엔드 형식으로 변환하여 반환
+  // 백엔드 응답을 그대로 반환 (KrxStockFinancialItem 형식)
   return {
-    ...data,                              // 기존 데이터 복사
-    headlines: data.headlines || [],      // headlines 없으면 빈 배열
-
-    // nullish coalescing 연산자 (??):
-    // - 왼쪽이 null 또는 undefined일 때만 오른쪽 값 사용
-    // - || 와 비슷하지만, 0이나 ''은 유효한 값으로 취급
-
-    // parseFloat(): 문자열을 숫자로 변환
-    // .replace('%', ''): '%' 문자 제거
-    changePercent: data.changePercent ?? parseFloat(data.priceChange?.replace('%', '') || '0'),
+    stockCode: data.stockCode,
+    stockName: data.stockName,
+    closingPrice: data.closingPrice ?? 0,
+    priceChange: data.priceChange ?? 0,
+    changeRate: data.changeRate ?? 0,
+    eps: data.eps ?? 0,
+    per: data.per ?? 0,
+    forwardEps: data.forwardEps ?? 0,
+    forwardPer: data.forwardPer ?? 0,
+    bps: data.bps ?? 0,
+    pbr: data.pbr ?? 0,
+    dividendPerShare: data.dividendPerShare ?? 0,
+    dividendYield: data.dividendYield ?? 0,
   };
 }
 

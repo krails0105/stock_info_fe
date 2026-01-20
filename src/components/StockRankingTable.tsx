@@ -3,7 +3,7 @@
 // 📌 종목 랭킹 테이블 컴포넌트
 //
 // 종목들을 테이블 형태로 보여줍니다.
-// 순위, 종목명, 점수, 현재가, 등락률, (선택) PER/PBR을 표시합니다.
+// 순위, 종목명, 점수, 현재가, 등락률, 시장을 표시합니다.
 // ============================================================
 
 import { Link } from 'react-router-dom';
@@ -18,6 +18,17 @@ interface StockRankingTableProps {
   stocks: StockScore[];      // 종목 배열 (필수)
   showPer?: boolean;         // PER 표시 여부 (선택, 기본값: false)
   showPbr?: boolean;         // PBR 표시 여부 (선택, 기본값: false)
+}
+
+// ------------------------------------------------------------
+// 🔧 유틸리티 함수: 등락률 문자열에서 숫자 추출
+// ------------------------------------------------------------
+// "-0.68%" → -0.68
+// "+2.5%" → 2.5
+function parseChangeRate(changeRate: string): number {
+  // parseFloat: 문자열을 소수점 숫자로 변환
+  // parseFloat("-0.68%") → -0.68 (% 기호는 자동으로 무시됨)
+  return parseFloat(changeRate) || 0;
 }
 
 // ------------------------------------------------------------
@@ -38,6 +49,7 @@ function StockRankingTable({ stocks, showPer = false, showPbr = false }: StockRa
             <th className="col-score">점수</th>
             <th className="col-price">현재가</th>
             <th className="col-change">등락률</th>
+            <th className="col-market">시장</th>
             {/*
               조건부 렌더링으로 컬럼 표시/숨김
               showPer가 true일 때만 PER 컬럼 표시
@@ -55,11 +67,11 @@ function StockRankingTable({ stocks, showPer = false, showPbr = false }: StockRa
             idx는 0부터 시작하므로 순위 표시할 때 +1
           */}
           {stocks.map((stock, idx) => {
+            // 등락률 문자열에서 숫자 추출
+            const changeValue = parseChangeRate(stock.changeRate);
             // 상승/하락 판단
-            const isUp = stock.changePercent > 0;
-            const isDown = stock.changePercent < 0;
-            // 부호 결정
-            const sign = isUp ? '+' : '';
+            const isUp = changeValue > 0;
+            const isDown = changeValue < 0;
 
             return (
               // 테이블 행
@@ -82,19 +94,25 @@ function StockRankingTable({ stocks, showPer = false, showPbr = false }: StockRa
                   <ScoreBadge score={stock.score} label={stock.label} size="sm" />
                 </td>
 
-                {/* 현재가 */}
+                {/*
+                  현재가
+                  .toLocaleString(): 천 단위 콤마 추가
+                  36450 → "36,450"
+                */}
                 <td className="col-price">{stock.price.toLocaleString()}원</td>
 
                 {/*
                   등락률
                   동적 클래스: 상승이면 'up', 하락이면 'down' 추가
+                  백틱(``)과 ${}로 문자열 안에 변수를 넣음 (템플릿 리터럴)
                 */}
                 <td className={`col-change ${isUp ? 'up' : ''} ${isDown ? 'down' : ''}`}>
-                  {/*
-                    .toFixed(2): 소수점 2자리까지 표시
-                  */}
-                  {sign}{stock.changePercent.toFixed(2)}%
+                  {/* changeRate는 이미 문자열이므로 그대로 표시 */}
+                  {stock.changeRate}
                 </td>
+
+                {/* 시장 (KOSPI/KOSDAQ) */}
+                <td className="col-market">{stock.market}</td>
 
                 {/*
                   PER 컬럼 (조건부)

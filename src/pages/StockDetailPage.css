@@ -1,11 +1,13 @@
 /* src/pages/StockDetailPage.css */
+/* 다른 페이지들과 일관된 스타일 */
 
 .stock-detail-page {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 24px 16px;
 }
 
+/* 뒤로가기 링크 */
 .back-link {
   display: inline-block;
   margin-bottom: 16px;
@@ -18,7 +20,7 @@
   color: #3b82f6;
 }
 
-/* 헤더 */
+/* ======== 헤더 ======== */
 .stock-header {
   background: #fff;
   border-radius: 12px;
@@ -36,32 +38,25 @@
 }
 
 .stock-header__name {
-  margin: 0 0 4px 0;
+  margin: 0 0 8px 0;
   font-size: 28px;
   font-weight: 700;
   color: #111827;
 }
 
 .stock-header__code {
+  display: inline-block;
   font-size: 14px;
   color: #9ca3af;
-  margin-right: 12px;
+  font-family: 'SF Mono', 'Monaco', 'Consolas', monospace;
 }
 
-.stock-header__sector {
-  font-size: 14px;
-  color: #3b82f6;
-  text-decoration: none;
-}
-
-.stock-header__sector:hover {
-  text-decoration: underline;
-}
-
+/* 가격 정보 */
 .stock-header__price {
   display: flex;
   align-items: baseline;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .price-value {
@@ -73,6 +68,7 @@
 .price-change {
   font-size: 18px;
   font-weight: 600;
+  color: #6b7280;
 }
 
 .price-change.up {
@@ -83,7 +79,7 @@
   color: #2563eb;
 }
 
-/* 섹션 */
+/* ======== 섹션 공통 ======== */
 .stock-section {
   background: #fff;
   border-radius: 12px;
@@ -99,51 +95,17 @@
   color: #6b7280;
 }
 
-/* 이유 */
-.stock-reasons {
-  margin: 0;
-  padding-left: 20px;
-  color: #374151;
-  font-size: 15px;
-  line-height: 1.8;
-}
-
-.stock-reasons li {
-  margin-bottom: 6px;
-}
-
-/* 투자 등급 */
-.stock-grades {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
-.grade-item {
-  display: flex;
-  gap: 8px;
-  align-items: center;
-  padding: 8px 16px;
-  background: #f0f9ff;
-  border-radius: 8px;
-}
-
-.grade-label {
-  font-size: 13px;
-  color: #6b7280;
-}
-
-.grade-value {
-  font-size: 14px;
-  font-weight: 600;
-  color: #0369a1;
-}
-
-/* 지표 */
+/* ======== 지표 카드 그리드 ======== */
 .stock-metrics {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 640px) {
+  .stock-metrics {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
 
 .metric-card {
@@ -151,68 +113,37 @@
   padding: 16px;
   border-radius: 8px;
   text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .metric-label {
   display: block;
   font-size: 12px;
+  font-weight: 600;
   color: #6b7280;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 
 .metric-value {
+  display: block;
   font-size: 20px;
   font-weight: 700;
   color: #111827;
+  margin-bottom: 4px;
 }
 
-/* 뉴스 */
-.news-list {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.news-list li {
-  padding: 12px 0;
-  border-bottom: 1px solid #f3f4f6;
-}
-
-.news-list li:last-child {
-  border-bottom: none;
-}
-
-.news-link {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-
-.news-title {
-  color: #374151;
-  font-size: 14px;
-}
-
-.news-link:hover .news-title {
-  color: #3b82f6;
-}
-
-.news-provider {
-  font-size: 12px;
+.metric-desc {
+  display: block;
+  font-size: 11px;
   color: #9ca3af;
-  white-space: nowrap;
 }
 
-.news-summary {
-  margin: 8px 0 0 0;
-  font-size: 13px;
-  color: #6b7280;
-  line-height: 1.5;
-}
-
-/* 로딩/에러 */
+/* ======== 로딩/에러 상태 ======== */
 .loading,
 .error {
   padding: 60px 40px;
@@ -225,4 +156,35 @@
 .error {
   color: #dc2626;
   background: #fef2f2;
+}
+
+/* ======== 반응형 ======== */
+@media (max-width: 768px) {
+  .stock-detail-page {
+    padding: 16px 12px;
+  }
+
+  .stock-header {
+    padding: 20px;
+  }
+
+  .stock-header__name {
+    font-size: 24px;
+  }
+
+  .price-value {
+    font-size: 28px;
+  }
+
+  .stock-section {
+    padding: 16px 20px;
+  }
+
+  .metric-card {
+    padding: 14px 12px;
+  }
+
+  .metric-value {
+    font-size: 18px;
+  }
 }
