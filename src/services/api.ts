@@ -23,8 +23,6 @@ import type {
   NewsItem
 } from '../types';
 
-// Mock 데이터 가져오기 (백엔드에 없는 API용)
-import { mockMarketSummary } from '../mocks/data';
 
 // ------------------------------------------------------------
 // ⚙️ 설정
@@ -103,23 +101,33 @@ api.interceptors.response.use(
 // 시장 요약 조회
 // ------------------------------------------------------------
 /**
- * 시장 지수 데이터를 가져옵니다 (KOSPI, KOSDAQ, NASDAQ, GOLD)
+ * 시장 지수 데이터를 가져옵니다 (코스피, 코스닥 등)
  *
- * async/await 문법:
- * - async: 이 함수가 비동기 함수임을 선언
- * - await: Promise가 완료될 때까지 기다림
+ * 백엔드 /api/indexes 응답 형식 (IndexResponse):
+ * - name: 지수명 (예: "코스피", "코스닥")
+ * - closingPrice: 종가 (포인트)
+ * - priceChange: 전일 대비 변동 (포인트)
+ * - changeRate: 등락률 문자열 (예: "+0.42%")
+ * - marketStatus: 시장 상태 ("상승"/"보합"/"하락")
  *
- * Promise<MarketSummary[]>: 이 함수는 MarketSummary 배열을 반환하는 Promise를 반환
- *
- * 현재 백엔드에 /api/indices 엔드포인트가 없어서 Mock 데이터 사용
+ * MarketSummary 타입으로 변환하여 반환합니다.
  */
 export async function getMarketSummary(): Promise<MarketSummary[]> {
-  // TODO: 백엔드에 /api/indices 구현 시 아래 주석 해제
-  // const response = await api.get('/indices');
-  // return response.data;
+  const response = await api.get('/indexes');
 
-  // Promise.resolve(): 즉시 완료되는 Promise 생성
-  return Promise.resolve(mockMarketSummary);
+  // IndexResponse → MarketSummary 변환
+  return response.data.map((item: {
+    name: string;
+    closingPrice: number;
+    priceChange: number;
+    changeRate: string;
+  }) => ({
+    name: item.name,
+    value: item.closingPrice,
+    change: item.priceChange,
+    // changeRate 문자열("+0.42%")에서 숫자 추출
+    changePercent: parseFloat(item.changeRate.replace('%', '')) || 0,
+  }));
 }
 
 // ------------------------------------------------------------
