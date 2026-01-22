@@ -20,7 +20,9 @@ import type {
   StockScoreboardResponse,
   StockDetail,
   SectorScore,
-  NewsItem
+  NewsItem,
+  StockInsight,
+  SectorInsight
 } from '../types';
 
 
@@ -241,6 +243,32 @@ export async function getNews(params: GetNewsParams = {}): Promise<NewsItem[]> {
     // 에러 발생 시 빈 배열 반환
     return [];
   }
+}
+
+// ------------------------------------------------------------
+// 인사이트 API 함수들
+// ------------------------------------------------------------
+
+/**
+ * 종목 인사이트 조회 (10초 요약)
+ *
+ * @param stockCode - 종목 코드 (예: "005930")
+ * @returns StockInsight - 10초 요약, 긍정/주의 카드, 뉴스 등
+ */
+export async function getStockInsight(stockCode: string): Promise<StockInsight> {
+  const response = await api.get(`/stocks/${stockCode}/insight`);
+  return response.data;
+}
+
+/**
+ * 섹터 인사이트 조회 (Top Picks + 브리핑)
+ *
+ * @param sectorName - 섹터명 (예: "전기전자")
+ * @returns SectorInsight - 섹터 브리핑, Top Picks, 뉴스 등
+ */
+export async function getSectorInsight(sectorName: string): Promise<SectorInsight> {
+  const response = await api.get(`/sectors/${encodeURIComponent(sectorName)}/insight`);
+  return response.data;
 }
 
 // ------------------------------------------------------------

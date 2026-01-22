@@ -1,0 +1,259 @@
+/* src/components/SectorTopPicks.css */
+/* 섹터 Top Picks 컴포넌트 스타일 */
+
+.sector-top-picks {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 섹터 헤더 */
+.sector-header {
+  margin-bottom: 24px;
+}
+
+.sector-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 8px 0;
+}
+
+.sector-headline {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #475569;
+  margin: 0 0 12px 0;
+  padding: 12px 16px;
+  background: #f1f5f9;
+  border-radius: 8px;
+  border-left: 3px solid #3b82f6;
+}
+
+.sector-drivers {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.sector-drivers li {
+  font-size: 14px;
+  color: #64748b;
+  padding-left: 16px;
+  position: relative;
+}
+
+.sector-drivers li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: #94a3b8;
+}
+
+/* Top Picks 섹션 */
+.top-picks-section {
+  margin-bottom: 20px;
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0 0 16px 0;
+}
+
+.title-icon {
+  font-size: 20px;
+}
+
+/* Top Picks 그리드 */
+.top-picks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+/* 개별 Top Pick 카드 */
+.top-pick-card {
+  background: #fafafa;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.top-pick-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+/* 카드 헤더 */
+.pick-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pick-rank {
+  font-size: 14px;
+  font-weight: 700;
+  color: #3b82f6;
+  background: #eff6ff;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.pick-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pick-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.pick-code {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* 픽 유형 태그 */
+.pick-type-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+.pick-type-tag.stable {
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.pick-type-tag.value {
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.pick-type-tag.growth {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.pick-type-tag.momentum {
+  background: #fae8ff;
+  color: #86198f;
+}
+
+.pick-type-tag.watch {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* 이유 목록 */
+.pick-reasons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reason-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+  color: #374151;
+}
+
+.reason-item.positive {
+  color: #166534;
+}
+
+.reason-icon {
+  flex-shrink: 0;
+  font-size: 12px;
+}
+
+/* 주의사항 */
+.pick-caution {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 10px 12px;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #92400e;
+  margin-bottom: 12px;
+}
+
+.caution-icon {
+  flex-shrink: 0;
+}
+
+/* 클릭 안내 */
+.pick-action {
+  text-align: right;
+  font-size: 13px;
+  color: #3b82f6;
+  font-weight: 500;
+}
+
+/* 안내 문구 */
+.disclaimer {
+  font-size: 12px;
+  color: #9ca3af;
+  text-align: center;
+  margin: 16px 0 0 0;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .sector-top-picks {
+    padding: 16px;
+  }
+
+  .sector-name {
+    font-size: 20px;
+  }
+
+  .sector-headline {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .top-picks-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .top-pick-card {
+    padding: 14px;
+  }
+
+  .pick-name {
+    font-size: 15px;
+  }
+}

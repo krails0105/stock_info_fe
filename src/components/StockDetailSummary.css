@@ -1,0 +1,224 @@
+/* src/components/StockDetailSummary.css */
+/* 종목 10초 요약 컴포넌트 스타일 */
+
+.stock-detail-summary {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+/* 헤더 영역 */
+.summary-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 16px;
+}
+
+.summary-title {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.stock-name {
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.stock-code {
+  font-size: 14px;
+  color: #888;
+}
+
+/* 한 줄 결론 (헤드라인) */
+.summary-headline {
+  font-size: 18px;
+  line-height: 1.5;
+  margin: 0 0 20px 0;
+  padding: 16px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.summary-headline.active {
+  background: #f0fdf4;
+  color: #166534;
+  border-left: 4px solid #22c55e;
+}
+
+.summary-headline.cautious {
+  background: #fef3c7;
+  color: #92400e;
+  border-left: 4px solid #f59e0b;
+}
+
+/* 근거 카드 영역 */
+.reason-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.reason-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 근거 카드 칩 */
+.reason-card-chip {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.reason-card-chip.positive {
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.reason-card-chip.caution {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+}
+
+.card-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.card-text {
+  color: #374151;
+}
+
+/* 행동 힌트 */
+.action-hint {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  background: #f1f5f9;
+  border-radius: 10px;
+  margin-bottom: 16px;
+}
+
+.hint-icon {
+  font-size: 18px;
+  color: #3b82f6;
+}
+
+.hint-text {
+  font-size: 15px;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* 메타 정보 */
+.meta-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 12px;
+  color: #9ca3af;
+  margin-bottom: 16px;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.coverage-low {
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+/* 자세히 보기 토글 */
+.expand-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 12px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.expand-toggle:hover {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.toggle-icon {
+  transition: transform 0.2s ease;
+}
+
+.toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+/* 확장 영역 */
+.expanded-content {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.triggered-rules h4 {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0 0 12px 0;
+  font-weight: 500;
+}
+
+.rules-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rule-tag {
+  padding: 4px 10px;
+  background: #e2e8f0;
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: monospace;
+  color: #475569;
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .stock-detail-summary {
+    padding: 16px;
+  }
+
+  .stock-name {
+    font-size: 20px;
+  }
+
+  .summary-headline {
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .reason-card-chip {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+}

@@ -18,6 +18,16 @@
   color: #3b82f6;
 }
 
+/* Top Picks 섹션 간격 */
+.sector-detail > .sector-top-picks {
+  margin-bottom: 20px;
+}
+
+/* 뉴스 섹션 간격 */
+.sector-news-section {
+  margin-bottom: 24px;
+}
+
 .sector-detail__header {
   background: #fff;
   border-radius: 12px;
