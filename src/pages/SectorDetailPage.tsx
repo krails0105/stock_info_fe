@@ -4,6 +4,7 @@
 //
 // URL: /sector/:sectorName (예: /sector/기술주)
 // 특정 섹터의 상세 정보와 해당 섹터에 속한 종목 목록을 보여줍니다.
+// Top Picks 인사이트 + 뉴스 제공
 // ============================================================
 
 // ------------------------------------------------------------
@@ -16,14 +17,16 @@ import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 // API 함수들
-import { getSectorScoreboard, getStockScoreboard } from '../services/api';
+import { getSectorScoreboard, getStockScoreboard, getSectorInsight } from '../services/api';
 
 // 타입들
-import type { SectorScore, StockScore } from '../types';
+import type { SectorScore, StockScore, SectorInsight } from '../types';
 
 // 컴포넌트들
 import ScoreBadge from '../components/ScoreBadge';
 import StockRankingTable from '../components/StockRankingTable';
+import SectorTopPicks from '../components/SectorTopPicks';
+import NewsHeadlineList from '../components/NewsHeadlineList';
 
 // CSS
 import './SectorDetailPage.css';
@@ -51,6 +54,9 @@ function SectorDetailPage() {
   // 섹터에 속한 종목 목록
   const [stocks, setStocks] = useState<StockScore[]>([]);
 
+  // 섹터 인사이트 (Top Picks + 뉴스)
+  const [insight, setInsight] = useState<SectorInsight | null>(null);
+
   // 로딩 상태
   const [loading, setLoading] = useState(true);
 
@@ -74,16 +80,17 @@ function SectorDetailPage() {
     // ----------------------------------------------------------
     // Promise.all: 여러 Promise를 동시에 실행
     // ----------------------------------------------------------
-    // 두 개의 API를 동시에 호출하고, 둘 다 완료되면 결과를 받습니다.
+    // 세 개의 API를 동시에 호출하고, 모두 완료되면 결과를 받습니다.
     // 순차적으로 호출하는 것보다 빠릅니다!
     //
-    // 반환값: [첫번째결과, 두번째결과] 형태의 배열
+    // 반환값: [첫번째결과, 두번째결과, 세번째결과] 형태의 배열
     Promise.all([
       getSectorScoreboard(),           // 전체 섹터 정보
       getStockScoreboard(sectorName),  // 해당 섹터의 종목 목록
+      getSectorInsight(sectorName).catch(() => null),  // 인사이트 (실패 시 null)
     ])
-      .then(([sectorData, stockData]) => {
-        // 구조 분해 할당: 배열의 첫 번째, 두 번째 요소를 각각 변수에 할당
+      .then(([sectorData, stockData, insightData]) => {
+        // 구조 분해 할당: 배열의 각 요소를 변수에 할당
 
         // .find(): 배열에서 조건에 맞는 첫 번째 요소를 찾음
         // 화살표 함수: (s) => s.sectorName === sectorName
@@ -97,6 +104,9 @@ function SectorDetailPage() {
 
         // 종목 목록을 상태에 저장
         setStocks(stockData.stocks);
+
+        // 인사이트 저장
+        setInsight(insightData);
       })
       .catch(() => {
         // 에러 발생 시
@@ -145,6 +155,18 @@ function SectorDetailPage() {
     <div className="sector-detail">
       {/* 뒤로가기 링크 */}
       <Link to="/" className="back-link">← 홈으로</Link>
+
+      {/* ======== 섹터 Top Picks 인사이트 ======== */}
+      {insight && (
+        <SectorTopPicks insight={insight} />
+      )}
+
+      {/* ======== 뉴스 헤드라인 ======== */}
+      {insight && insight.news && (
+        <div className="sector-news-section">
+          <NewsHeadlineList news={insight.news} maxItems={5} />
+        </div>
+      )}
 
       {/* 섹터 헤더 */}
       <header className="sector-detail__header">

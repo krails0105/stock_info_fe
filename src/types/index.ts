@@ -169,3 +169,139 @@ export function getScoreColor(score: number): string {
   if (score >= 40) return '#ca8a04';  // 노란색 (보통)
   return '#dc2626';                    // 빨간색 (약세)
 }
+
+// ============================================================
+// 📌 인사이트 관련 타입 (10초 요약, Top Picks, 뉴스)
+// ============================================================
+
+// ------------------------------------------------------------
+// 🏷️ 인사이트 Enum 타입들
+// ------------------------------------------------------------
+export type InsightTemplate = 'A_VALUE' | 'B_MOMENTUM' | 'C_STABLE' | 'D_GROWTH' | 'E_RISK';
+export type InsightTone = 'ACTIVE_GUIDE' | 'CAUTIOUS_GUIDE';
+export type Confidence = 'HIGH' | 'MEDIUM' | 'LOW';
+export type ReasonCategory = 'VALUATION' | 'FUNDAMENTALS' | 'MOMENTUM' | 'STABILITY' | 'NEWS' | 'RISK';
+export type ReasonPolarity = 'POSITIVE' | 'CAUTION';
+export type ReasonStrength = 'WEAK' | 'MEDIUM' | 'STRONG';
+export type NewsTag = 'EARNINGS' | 'CONTRACT' | 'BUYBACK_DIVIDEND' | 'REGULATION_RISK' | 'MA' | 'INDUSTRY' | 'RUMOR';
+export type NewsImportance = 'HIGH' | 'MEDIUM' | 'LOW';
+export type PickType = 'STABLE' | 'VALUE' | 'GROWTH' | 'MOMENTUM' | 'WATCH';
+export type FocusKey = 'EARNINGS_TREND' | 'SECTOR_COMPARISON' | 'VOLUME_TREND' | 'VOLATILITY' | 'NEXT_EARNINGS' | 'NEWS_RISK';
+
+// ------------------------------------------------------------
+// 📰 인사이트 뉴스 아이템 타입
+// ------------------------------------------------------------
+export interface InsightNewsItem {
+  title: string;
+  publisher: string;
+  publishedAt: string;
+  url: string;
+  tags: NewsTag[];
+  importance: NewsImportance;
+  clusterId?: string;
+}
+
+// ------------------------------------------------------------
+// 🎯 근거 카드 타입
+// ------------------------------------------------------------
+export interface ReasonCard {
+  key: string;
+  category: ReasonCategory;
+  polarity: ReasonPolarity;
+  text: string;
+  strength: ReasonStrength;
+  evidence?: Record<string, unknown>;
+}
+
+// ------------------------------------------------------------
+// 📊 인사이트 메타 정보
+// ------------------------------------------------------------
+export interface InsightMeta {
+  asOf: string;
+  sources: string[];
+  coverage: number;
+  stalenessSec: number;
+  disclaimerKey?: string;
+}
+
+// ------------------------------------------------------------
+// 🎯 인사이트 점수
+// ------------------------------------------------------------
+export interface InsightScore {
+  value: number;
+  grade: ScoreLabel;
+  confidence: Confidence;
+}
+
+// ------------------------------------------------------------
+// 💡 인사이트 요약
+// ------------------------------------------------------------
+export interface InsightSummary {
+  template: InsightTemplate;
+  headline: string;
+  tone: InsightTone;
+  actionHint: {
+    text: string;
+    focusKeys: FocusKey[];
+  };
+}
+
+// ------------------------------------------------------------
+// 📋 인사이트 근거
+// ------------------------------------------------------------
+export interface InsightReasons {
+  positive: ReasonCard[];
+  caution: ReasonCard[];
+  triggeredRules: string[];
+}
+
+// ------------------------------------------------------------
+// 📰 인사이트 뉴스
+// ------------------------------------------------------------
+export interface InsightNews {
+  issueBrief: string[];
+  headlineItems: InsightNewsItem[];
+}
+
+// ------------------------------------------------------------
+// 📈 종목 인사이트 (StockInsight)
+// ------------------------------------------------------------
+export interface StockInsight {
+  entity: {
+    type: 'STOCK';
+    code: string;
+    name: string;
+    sectorName: string;
+  };
+  meta: InsightMeta;
+  score: InsightScore;
+  summary: InsightSummary;
+  reasons: InsightReasons;
+  news: InsightNews;
+}
+
+// ------------------------------------------------------------
+// 🏢 섹터 인사이트 (SectorInsight)
+// ------------------------------------------------------------
+export interface TopPick {
+  code: string;
+  name: string;
+  grade: ScoreLabel;
+  pickType: PickType;
+  reasons: string[];
+  caution?: string;
+}
+
+export interface SectorInsight {
+  entity: {
+    type: 'SECTOR';
+    name: string;
+  };
+  meta: InsightMeta;
+  summary: {
+    headline: string;
+    drivers: string[];
+  };
+  topPicks: TopPick[];
+  news: InsightNews;
+}

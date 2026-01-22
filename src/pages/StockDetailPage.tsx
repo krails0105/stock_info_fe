@@ -4,6 +4,7 @@
 //
 // URL: /stock/:stockCode (예: /stock/005930)
 // 특정 종목의 재무지표 정보를 보여줍니다.
+// 10초 요약 인사이트 + 상세 재무지표 + 뉴스 제공
 // ============================================================
 
 // ------------------------------------------------------------
@@ -11,8 +12,10 @@
 // ------------------------------------------------------------
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getStockDetail } from '../services/api';
-import type { StockDetail } from '../types';
+import { getStockDetail, getStockInsight } from '../services/api';
+import type { StockDetail, StockInsight } from '../types';
+import StockDetailSummary from '../components/StockDetailSummary';
+import NewsHeadlineList from '../components/NewsHeadlineList';
 import './StockDetailPage.css';
 
 // ------------------------------------------------------------
@@ -25,6 +28,7 @@ function StockDetailPage() {
 
   // 상태 정의
   const [stock, setStock] = useState<StockDetail | null>(null);
+  const [insight, setInsight] = useState<StockInsight | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -39,9 +43,15 @@ function StockDetailPage() {
     setLoading(true);
     setError(null);
 
-    // API 호출
-    getStockDetail(stockCode)
-      .then(setStock)  // .then((data) => setStock(data))의 축약형
+    // API 동시 호출 (재무지표 + 인사이트)
+    Promise.all([
+      getStockDetail(stockCode),
+      getStockInsight(stockCode).catch(() => null), // 인사이트 실패 시 null
+    ])
+      .then(([stockData, insightData]) => {
+        setStock(stockData);
+        setInsight(insightData);
+      })
       .catch(() => setError('종목 정보를 불러올 수 없습니다'))
       .finally(() => setLoading(false));
   }, [stockCode]); // stockCode가 변경되면 다시 실행
@@ -91,6 +101,16 @@ function StockDetailPage() {
       <Link to="/" className="back-link">
         ← 홈으로
       </Link>
+
+      {/* ======== 10초 요약 인사이트 ======== */}
+      {insight && (
+        <StockDetailSummary insight={insight} />
+      )}
+
+      {/* ======== 뉴스 헤드라인 ======== */}
+      {insight && insight.news && (
+        <NewsHeadlineList news={insight.news} maxItems={5} />
+      )}
 
       {/* ======== 종목 헤더 ======== */}
       <header className="stock-header">
