@@ -43,7 +43,8 @@ export default function SectorTopPicks({ insight }: SectorTopPicksProps) {
       <div className="top-picks-section">
         <h3 className="section-title">
           <span className="title-icon">🏆</span>
-          우선 검토 종목 Top {topPicks.length}
+          {/* P0-3: 동적 섹션 타이틀 (백엔드에서 전달, 없으면 기본값) */}
+          {insight.sectionTitle || `우선 검토 종목 Top ${topPicks.length}`}
         </h3>
 
         <div className="top-picks-grid">
