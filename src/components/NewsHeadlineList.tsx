@@ -14,16 +14,43 @@ import './NewsHeadlineList.css';
 interface NewsHeadlineListProps {
   news: InsightNews;
   maxItems?: number;
+  /** P0-4: 외부 검색용 키워드 (종목명 또는 섹터명) */
+  searchKeyword?: string;
 }
 
-export default function NewsHeadlineList({ news, maxItems = 5 }: NewsHeadlineListProps) {
+export default function NewsHeadlineList({ news, maxItems = 5, searchKeyword }: NewsHeadlineListProps) {
   const { issueBrief, headlineItems } = news;
   const displayItems = headlineItems.slice(0, maxItems);
 
+  // P0-4: 뉴스 0건 fallback UX
   if (headlineItems.length === 0 && issueBrief.length === 0) {
     return (
       <div className="news-headline-list empty">
-        <p className="empty-message">관련 뉴스가 없습니다.</p>
+        <div className="empty-content">
+          <span className="empty-icon">📰</span>
+          <p className="empty-message">아직 수집된 뉴스가 없어요.</p>
+          <p className="empty-sub-message">외부에서 직접 검색해 보세요.</p>
+          {searchKeyword && (
+            <div className="external-links">
+              <a
+                href={`https://search.naver.com/search.naver?where=news&query=${encodeURIComponent(searchKeyword)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="external-link-btn naver"
+              >
+                네이버 뉴스로 보기
+              </a>
+              <a
+                href={`https://www.google.com/search?q=${encodeURIComponent(searchKeyword)}&tbm=nws`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="external-link-btn google"
+              >
+                구글 뉴스로 보기
+              </a>
+            </div>
+          )}
+        </div>
       </div>
     );
   }

@@ -13,10 +13,67 @@
   text-align: center;
 }
 
+/* P0-4: 뉴스 0건 fallback UX */
+.empty-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
 .empty-message {
-  color: #9ca3af;
-  font-size: 14px;
+  color: #374151;
+  font-size: 15px;
+  font-weight: 500;
   margin: 0;
+}
+
+.empty-sub-message {
+  color: #9ca3af;
+  font-size: 13px;
+  margin: 0 0 16px 0;
+}
+
+.external-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.external-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.external-link-btn.naver {
+  background: #03c75a;
+  color: white;
+}
+
+.external-link-btn.naver:hover {
+  background: #02b150;
+}
+
+.external-link-btn.google {
+  background: #4285f4;
+  color: white;
+}
+
+.external-link-btn.google:hover {
+  background: #3367d6;
 }
 
 /* 섹션 타이틀 */

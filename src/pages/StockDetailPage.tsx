@@ -109,7 +109,8 @@ function StockDetailPage() {
 
       {/* ======== 뉴스 헤드라인 ======== */}
       {insight && insight.news && (
-        <NewsHeadlineList news={insight.news} maxItems={5} />
+        /* P0-4: searchKeyword로 종목명 전달 (뉴스 0건 시 외부 검색 링크용) */
+        <NewsHeadlineList news={insight.news} maxItems={5} searchKeyword={stock.stockName} />
       )}
 
       {/* ======== 종목 헤더 ======== */}
