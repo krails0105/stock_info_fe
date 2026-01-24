@@ -83,6 +83,13 @@ function SectorCard({ sector, rank }: SectorCardProps) {
         <ScoreBadge score={sector.score} label={sector.label} />
       </div>
 
+      {/* P0-1: 표본 적음 경고 배지 (종목 수 5개 미만) */}
+      {sector.stockCount !== undefined && sector.stockCount < 5 && (
+        <div className="sector-card__low-sample-badge">
+          표본 적음({sector.stockCount})
+        </div>
+      )}
+
       {/* 이유 목록 */}
       <ul className="sector-card__reasons">
         {/*

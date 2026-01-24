@@ -304,4 +304,7 @@ export interface SectorInsight {
   };
   topPicks: TopPick[];
   news: InsightNews;
+  // P0-1: 표본 크기 정보
+  sampleSize?: number;
+  lowSampleWarning?: boolean;
 }
