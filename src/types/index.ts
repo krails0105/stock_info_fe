@@ -188,6 +188,9 @@ export type NewsImportance = 'HIGH' | 'MEDIUM' | 'LOW';
 export type PickType = 'STABLE' | 'VALUE' | 'GROWTH' | 'MOMENTUM' | 'WATCH';
 export type FocusKey = 'EARNINGS_TREND' | 'SECTOR_COMPARISON' | 'VOLUME_TREND' | 'VOLATILITY' | 'NEXT_EARNINGS' | 'NEWS_RISK';
 
+// P0-3: TopPick 역할 구분
+export type TopPickRole = 'REPRESENTATIVE' | 'WATCHLIST_PRIORITY';
+
 // ------------------------------------------------------------
 // 📰 인사이트 뉴스 아이템 타입
 // ------------------------------------------------------------
@@ -290,6 +293,8 @@ export interface TopPick {
   pickType: PickType;
   reasons: string[];
   caution?: string;
+  // P0-3: TopPick 역할
+  role?: TopPickRole;
 }
 
 export interface SectorInsight {
@@ -307,4 +312,6 @@ export interface SectorInsight {
   // P0-1: 표본 크기 정보
   sampleSize?: number;
   lowSampleWarning?: boolean;
+  // P0-3: 동적 섹션 타이틀
+  sectionTitle?: string;
 }
