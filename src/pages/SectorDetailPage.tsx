@@ -164,7 +164,8 @@ function SectorDetailPage() {
       {/* ======== 뉴스 헤드라인 ======== */}
       {insight && insight.news && (
         <div className="sector-news-section">
-          <NewsHeadlineList news={insight.news} maxItems={5} />
+          {/* P0-4: searchKeyword로 섹터명 전달 (뉴스 0건 시 외부 검색 링크용) */}
+          <NewsHeadlineList news={insight.news} maxItems={5} searchKeyword={sectorName} />
         </div>
       )}
 
