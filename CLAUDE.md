@@ -84,3 +84,24 @@ src/
 - Consistent card style: `border-radius: 12px`, `box-shadow: 0 1px 3px rgba(0,0,0,0.08)`
 - Hover effect: `transform: translateY(-2px)`
 - Color scheme: Red (#dc2626) for price up, Blue (#2563eb) for price down
+
+## 작업 완료 체크리스트
+
+작업 완료 시 아래 순서대로 진행:
+
+1. **린트 및 커밋**
+   ```bash
+   npm run lint
+   git add .
+   git commit -m "feat: 작업 내용"
+   git push
+   ```
+
+2. **문서 업데이트**
+   - `../docs/PROGRESS.md` 작업 내역 추가
+   - 필요시 이 파일(CLAUDE.md) 업데이트
+
+3. **PR 생성** (feature 브랜치인 경우)
+   ```bash
+   gh pr create --title "제목" --body "## Summary\n- 내용"
+   ```
