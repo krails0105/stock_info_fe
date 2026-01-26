@@ -1,0 +1,218 @@
+/* src/components/HomeWatchlistPicks.css */
+/* 홈 Watchlist Picks 컴포넌트 스타일 */
+
+.watchlist-picks {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* 헤더 */
+.watchlist-picks__header {
+  margin-bottom: 16px;
+}
+
+.watchlist-picks__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 4px 0;
+}
+
+.watchlist-picks__subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin: 0;
+}
+
+/* 프리셋 탭 */
+.watchlist-picks__tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.watchlist-picks__tab {
+  padding: 8px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  background: white;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.watchlist-picks__tab:hover {
+  border-color: #3b82f6;
+  color: #3b82f6;
+}
+
+.watchlist-picks__tab.active {
+  background: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* 카드 그리드 */
+.watchlist-picks__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .watchlist-picks__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Pick 카드 */
+.pick-card {
+  background: #fafafa;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pick-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
+}
+
+/* 카드 헤더 */
+.pick-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.pick-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.pick-card__name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.pick-card__code {
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+/* 배지 */
+.pick-card__badges {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.pick-card__bucket {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.pick-card__bucket.stable {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.pick-card__bucket.representative {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.pick-card__bucket.momentum {
+  background: #fae8ff;
+  color: #86198f;
+}
+
+.pick-card__bucket.value {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.pick-card__bucket.news {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.pick-card__sector {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: #f1f5f9;
+  color: #475569;
+}
+
+/* 이유 목록 */
+.pick-card__reasons {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 8px 0;
+}
+
+.pick-card__reasons li {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+/* 주의사항 */
+.pick-card__caution {
+  font-size: 12px;
+  color: #92400e;
+  background: #fffbeb;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #fde68a;
+}
+
+/* 로딩 */
+.watchlist-picks .loading {
+  text-align: center;
+  padding: 40px;
+  color: #64748b;
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .watchlist-picks {
+    padding: 16px;
+  }
+
+  .watchlist-picks__title {
+    font-size: 18px;
+  }
+
+  .watchlist-picks__tabs {
+    flex-wrap: wrap;
+  }
+
+  .watchlist-picks__tab {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+
+  .pick-card {
+    padding: 14px;
+  }
+
+  .pick-card__name {
+    font-size: 15px;
+  }
+}

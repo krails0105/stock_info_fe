@@ -22,7 +22,8 @@ import type {
   SectorScore,
   NewsItem,
   StockInsight,
-  SectorInsight
+  SectorInsight,
+  HomePicksResponse
 } from '../types';
 
 
@@ -268,6 +269,20 @@ export async function getStockInsight(stockCode: string): Promise<StockInsight> 
  */
 export async function getSectorInsight(sectorName: string): Promise<SectorInsight> {
   const response = await api.get(`/sectors/${encodeURIComponent(sectorName)}/insight`);
+  return response.data;
+}
+
+/**
+ * 홈 Watchlist Picks 조회 (오늘 주목할 종목)
+ *
+ * @param size - 선정할 종목 수 (기본 8, 5~10)
+ * @param preset - 프리셋 ('default' | 'stable' | 'momentum' | 'value')
+ * @returns HomePicksResponse - 선정된 종목 카드 목록
+ */
+export async function getHomePicks(size = 8, preset = 'default'): Promise<HomePicksResponse> {
+  const response = await api.get<HomePicksResponse>('/home/picks', {
+    params: { size, preset }
+  });
   return response.data;
 }
 

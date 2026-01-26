@@ -315,3 +315,46 @@ export interface SectorInsight {
   // P0-3: 동적 섹션 타이틀
   sectionTitle?: string;
 }
+
+// ============================================================
+// 📌 홈 Watchlist Picks 관련 타입
+// ============================================================
+
+// ------------------------------------------------------------
+// 🏷️ Pick 버킷 타입
+// ------------------------------------------------------------
+export type PickBucket = 'STABLE' | 'REPRESENTATIVE' | 'MOMENTUM' | 'VALUE' | 'NEWS';
+
+// ------------------------------------------------------------
+// 📰 Pick 뉴스 타입
+// ------------------------------------------------------------
+export interface PickNews {
+  title: string;
+  url: string;
+  publisher: string;
+  publishedAt?: string;
+}
+
+// ------------------------------------------------------------
+// 🎯 Stock Pick 카드 타입
+// ------------------------------------------------------------
+export interface StockPickCard {
+  code: string;
+  name: string;
+  sectorName: string;
+  scoreValue: number;
+  grade: ScoreLabel;
+  pickBucket: PickBucket;
+  reasons: string[];
+  caution?: string;
+  news?: PickNews;
+}
+
+// ------------------------------------------------------------
+// 📋 홈 Picks 응답 타입
+// ------------------------------------------------------------
+export interface HomePicksResponse {
+  asOf: string;
+  preset: string;
+  items: StockPickCard[];
+}

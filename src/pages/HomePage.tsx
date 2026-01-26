@@ -24,6 +24,7 @@ import type { SectorScore } from '../types';
 import MarketSummaryBar from '../components/MarketSummaryBar';
 import SectorCard from '../components/SectorCard';
 import SectorListGrid from '../components/SectorListGrid';
+import HomeWatchlistPicks from '../components/HomeWatchlistPicks';
 
 // CSS 파일을 가져옵니다. 이 컴포넌트의 스타일을 정의합니다.
 import './HomePage.css';
@@ -121,6 +122,11 @@ function HomePage() {
           이렇게 컴포넌트를 HTML 태그처럼 사용할 수 있습니다.
         */}
         <MarketSummaryBar />
+      </section>
+
+      {/* 섹션 1.5: 오늘 주목할 종목 (Watchlist Picks) */}
+      <section className="section">
+        <HomeWatchlistPicks />
       </section>
 
       {/* 섹션 2: 주목할 섹터 TOP 3 */}
