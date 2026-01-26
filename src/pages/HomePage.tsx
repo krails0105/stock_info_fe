@@ -90,12 +90,15 @@ function HomePage() {
   // ----------------------------------------------------------
   // 🏆 TOP 3 섹터 계산
   // ----------------------------------------------------------
-  // 스프레드 연산자 [...sectors]: 배열을 복사합니다.
-  // 원본 배열을 직접 수정하면 안 되기 때문에 복사본을 만듭니다.
+  // P0-1: 표본 수가 5개 이상인 섹터만 TOP3 후보로 선정
+  // 표본이 너무 적은 섹터는 신뢰도가 낮아 TOP3에서 제외합니다.
   //
+  // .filter(): 조건에 맞는 요소만 선택 (stockCount >= 5)
   // .sort(): 배열 정렬. (a, b) => b.score - a.score는 점수 내림차순 정렬
   // .slice(0, 3): 처음 3개만 자르기
+  const MIN_SAMPLE_SIZE_FOR_TOP3 = 5;
   const topSectors = [...sectors]
+    .filter((s) => (s.stockCount ?? 0) >= MIN_SAMPLE_SIZE_FOR_TOP3)
     .sort((a, b) => b.score - a.score)
     .slice(0, 3);
 
