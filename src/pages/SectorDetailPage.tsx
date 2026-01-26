@@ -315,24 +315,30 @@ function SectorDetailPage() {
             </span>
           </div>
 
-          {/* 초보자 보호 필터 */}
+          {/* 초보자 보호 필터 (UI 가이드: 툴팁 포함) */}
           <div className="sector-detail__filters">
             <span className="sector-detail__filter-label">초보자 보호:</span>
-            <label className="sector-detail__checkbox">
+            <label
+              className="sector-detail__checkbox"
+              title="PER 계산이 무의미한 종목을 숨깁니다"
+            >
               <input
                 type="checkbox"
                 checked={filters.hideDeficit}
                 onChange={(e) => setFilters((f) => ({ ...f, hideDeficit: e.target.checked }))}
               />
-              적자 숨기기
+              적자 제외
             </label>
-            <label className="sector-detail__checkbox">
+            <label
+              className="sector-detail__checkbox"
+              title="단기 급변 종목을 숨깁니다 (초보자 보호)"
+            >
               <input
                 type="checkbox"
                 checked={filters.hideVolatile}
                 onChange={(e) => setFilters((f) => ({ ...f, hideVolatile: e.target.checked }))}
               />
-              급등락 숨기기
+              급등락 제외
             </label>
           </div>
 

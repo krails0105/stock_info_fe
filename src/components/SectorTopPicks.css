@@ -88,6 +88,27 @@
   padding: 16px;
   cursor: pointer;
   transition: all 0.2s ease;
+  position: relative;
+}
+
+/* P0-3 UI: role 배지 (섹터 대표 / 우선 관찰) */
+.pick-role-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.pick-role-badge.representative {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.pick-role-badge.watchlist_priority {
+  background: #fef3c7;
+  color: #92400e;
 }
 
 .top-pick-card:hover {

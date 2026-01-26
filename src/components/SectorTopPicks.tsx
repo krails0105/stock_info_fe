@@ -79,9 +79,17 @@ interface TopPickCardProps {
 function TopPickCard({ pick, rank, onClick }: TopPickCardProps) {
   const pickTypeLabel = getPickTypeLabel(pick.pickType);
   const pickTypeClass = pick.pickType.toLowerCase();
+  const roleLabel = getRoleLabel(pick.role);
 
   return (
     <div className="top-pick-card" onClick={onClick}>
+      {/* P0-3 UI: role 배지 (카드 상단에 표시) */}
+      {roleLabel && (
+        <div className={`pick-role-badge ${pick.role?.toLowerCase()}`}>
+          {roleLabel}
+        </div>
+      )}
+
       {/* 순위 + 종목명 */}
       <div className="pick-header">
         <span className="pick-rank">#{rank}</span>
@@ -97,9 +105,9 @@ function TopPickCard({ pick, rank, onClick }: TopPickCardProps) {
         {pickTypeLabel}
       </div>
 
-      {/* 이유 목록 */}
+      {/* 이유 목록 (UI 가이드: 2줄만 기본 노출) */}
       <ul className="pick-reasons">
-        {pick.reasons.map((reason, index) => (
+        {pick.reasons.slice(0, 2).map((reason, index) => (
           <li key={index} className="reason-item positive">
             <span className="reason-icon">✅</span>
             {reason}
@@ -136,6 +144,16 @@ function getPickTypeLabel(pickType: string): string {
     WATCH: '관찰형'
   };
   return labels[pickType] || pickType;
+}
+
+// P0-3 UI: role 라벨 변환 (REPRESENTATIVE → 섹터 대표, WATCHLIST_PRIORITY → 우선 관찰)
+function getRoleLabel(role?: string): string | null {
+  if (!role) return null;
+  const labels: Record<string, string> = {
+    REPRESENTATIVE: '섹터 대표',
+    WATCHLIST_PRIORITY: '우선 관찰'
+  };
+  return labels[role] || null;
 }
 
 function gradeToScore(grade: ScoreLabel): number {

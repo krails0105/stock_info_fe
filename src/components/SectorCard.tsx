@@ -90,22 +90,14 @@ function SectorCard({ sector, rank }: SectorCardProps) {
         </div>
       )}
 
-      {/* 이유 목록 */}
+      {/* 이유 목록 (UI 가이드: 최대 2개, "총 N개 종목 포함" 제외) */}
       <ul className="sector-card__reasons">
-        {/*
-          .slice(0, 3): 배열의 0번째부터 2번째까지 (총 3개) 자르기
-          .map(): 배열의 각 요소를 JSX로 변환
-
-          (reason, idx): 콜백 함수의 매개변수
-          - reason: 현재 요소 (이유 문자열)
-          - idx: 인덱스 (0, 1, 2, ...)
-
-          key={idx}: React에게 "이 항목은 이 키로 구분해"라고 알려줌
-          (보통은 고유한 ID를 쓰는 게 좋지만, 여기서는 인덱스 사용)
-        */}
-        {sector.reasons.slice(0, 3).map((reason, idx) => (
-          <li key={idx}>{reason}</li>
-        ))}
+        {sector.reasons
+          .filter((r) => !r.includes('종목 포함'))  // "총 N개 종목 포함" 제외
+          .slice(0, 2)  // 최대 2개만 표시
+          .map((reason, idx) => (
+            <li key={idx}>{reason}</li>
+          ))}
       </ul>
 
       {/*
