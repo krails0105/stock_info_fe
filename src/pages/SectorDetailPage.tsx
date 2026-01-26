@@ -10,7 +10,7 @@
 // ------------------------------------------------------------
 // 📦 import
 // ------------------------------------------------------------
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 
 // useParams: URL의 동적 파라미터를 읽는 훅
 // Link: 페이지 이동 컴포넌트
@@ -21,6 +21,32 @@ import { getSectorScoreboard, getStockScoreboard, getSectorInsight } from '../se
 
 // 타입들
 import type { SectorScore, StockScore, SectorInsight } from '../types';
+
+// ------------------------------------------------------------
+// 📋 P1-1: 정렬 프리셋 타입
+// ------------------------------------------------------------
+type SortPreset = 'beginner' | 'stable' | 'growth' | 'momentum' | 'value';
+
+const SORT_PRESETS: { value: SortPreset; label: string; description: string }[] = [
+  { value: 'beginner', label: '초보자 추천', description: '종합 점수 높은 순' },
+  { value: 'stable', label: '안정 우선', description: '변동성 낮은 종목 우선' },
+  { value: 'growth', label: '성장 기대', description: '성장 가능성 높은 순' },
+  { value: 'momentum', label: '모멘텀', description: '상승률 높은 순' },
+  { value: 'value', label: '저평가', description: 'PER 낮은 순 (적자 제외)' },
+];
+
+// ------------------------------------------------------------
+// 📋 P1-2: 초보자 보호 필터 타입
+// ------------------------------------------------------------
+interface ProtectionFilters {
+  hideDeficit: boolean;      // 적자 종목 숨기기 (PER <= 0)
+  hideVolatile: boolean;     // 급등락 종목 숨기기 (|changeRate| > 5%)
+}
+
+// 등락률 문자열에서 숫자 추출
+function parseChangeRate(changeRate: string): number {
+  return parseFloat(changeRate) || 0;
+}
 
 // 컴포넌트들
 import ScoreBadge from '../components/ScoreBadge';
@@ -62,6 +88,15 @@ function SectorDetailPage() {
 
   // 에러 메시지
   const [error, setError] = useState<string | null>(null);
+
+  // P1-1: 정렬 프리셋
+  const [sortPreset, setSortPreset] = useState<SortPreset>('beginner');
+
+  // P1-2: 초보자 보호 필터 (기본 ON)
+  const [filters, setFilters] = useState<ProtectionFilters>({
+    hideDeficit: true,
+    hideVolatile: true,
+  });
 
   // ----------------------------------------------------------
   // ⚡ useEffect: 데이터 로딩
@@ -117,6 +152,58 @@ function SectorDetailPage() {
         setLoading(false);
       });
   }, [sectorName]); // ← sectorName이 변경되면 다시 실행
+
+  // ----------------------------------------------------------
+  // 🔄 P1-1 & P1-2: 정렬 및 필터 적용
+  // ----------------------------------------------------------
+  const filteredAndSortedStocks = useMemo(() => {
+    let result = [...stocks];
+
+    // P1-2: 필터 적용
+    if (filters.hideDeficit) {
+      // 적자 종목 제외 (PER이 null, undefined, 0 이하인 경우)
+      result = result.filter((s) => s.per != null && s.per > 0);
+    }
+    if (filters.hideVolatile) {
+      // 급등락 종목 제외 (등락률 절댓값 > 5%)
+      result = result.filter((s) => Math.abs(parseChangeRate(s.changeRate)) <= 5);
+    }
+
+    // P1-1: 정렬 적용
+    switch (sortPreset) {
+      case 'beginner':
+        // 종합 점수 내림차순
+        result.sort((a, b) => b.score - a.score);
+        break;
+      case 'stable':
+        // 변동성 낮은 순 (등락률 절댓값 오름차순), 동점이면 점수 높은 순
+        result.sort((a, b) => {
+          const volA = Math.abs(parseChangeRate(a.changeRate));
+          const volB = Math.abs(parseChangeRate(b.changeRate));
+          if (volA !== volB) return volA - volB;
+          return b.score - a.score;
+        });
+        break;
+      case 'growth':
+        // 성장 기대: 점수 높은 순 (현재 데이터로는 beginner와 동일)
+        result.sort((a, b) => b.score - a.score);
+        break;
+      case 'momentum':
+        // 상승률 높은 순
+        result.sort((a, b) => parseChangeRate(b.changeRate) - parseChangeRate(a.changeRate));
+        break;
+      case 'value':
+        // PER 낮은 순 (적자/null 제외)
+        result = result.filter((s) => s.per != null && s.per > 0);
+        result.sort((a, b) => (a.per ?? 999) - (b.per ?? 999));
+        break;
+    }
+
+    return result;
+  }, [stocks, sortPreset, filters]);
+
+  // 필터로 제외된 종목 수
+  const filteredOutCount = stocks.length - filteredAndSortedStocks.length;
 
   // ----------------------------------------------------------
   // 🔄 조건부 렌더링: 로딩 중
@@ -205,13 +292,64 @@ function SectorDetailPage() {
       {/* 종목 랭킹 테이블 */}
       <section className="sector-detail__stocks">
         <h2>종목 랭킹</h2>
+
+        {/* P1-1 & P1-2: 정렬/필터 컨트롤 */}
+        <div className="sector-detail__controls">
+          {/* 정렬 프리셋 */}
+          <div className="sector-detail__sort">
+            <label htmlFor="sort-preset">정렬:</label>
+            <select
+              id="sort-preset"
+              value={sortPreset}
+              onChange={(e) => setSortPreset(e.target.value as SortPreset)}
+              className="sector-detail__select"
+            >
+              {SORT_PRESETS.map((preset) => (
+                <option key={preset.value} value={preset.value}>
+                  {preset.label}
+                </option>
+              ))}
+            </select>
+            <span className="sector-detail__sort-desc">
+              {SORT_PRESETS.find((p) => p.value === sortPreset)?.description}
+            </span>
+          </div>
+
+          {/* 초보자 보호 필터 */}
+          <div className="sector-detail__filters">
+            <span className="sector-detail__filter-label">초보자 보호:</span>
+            <label className="sector-detail__checkbox">
+              <input
+                type="checkbox"
+                checked={filters.hideDeficit}
+                onChange={(e) => setFilters((f) => ({ ...f, hideDeficit: e.target.checked }))}
+              />
+              적자 숨기기
+            </label>
+            <label className="sector-detail__checkbox">
+              <input
+                type="checkbox"
+                checked={filters.hideVolatile}
+                onChange={(e) => setFilters((f) => ({ ...f, hideVolatile: e.target.checked }))}
+              />
+              급등락 숨기기
+            </label>
+          </div>
+
+          {/* 필터 결과 안내 */}
+          {filteredOutCount > 0 && (
+            <div className="sector-detail__filter-info">
+              {filteredOutCount}개 종목이 필터로 숨겨졌습니다.
+            </div>
+          )}
+        </div>
+
         {/*
           컴포넌트에 props 전달
-          stocks={stocks}: 종목 배열
+          filteredAndSortedStocks: 정렬/필터 적용된 종목 배열
           showPer, showPbr: boolean props (true 전달)
-          축약형: showPer={true} 대신 showPer만 써도 됨
         */}
-        <StockRankingTable stocks={stocks} showPer showPbr />
+        <StockRankingTable stocks={filteredAndSortedStocks} showPer showPbr />
       </section>
     </div>
   );
