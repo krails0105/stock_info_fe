@@ -57,14 +57,20 @@ function StockDetailPage() {
       .then(([stockData, insightData]) => {
         setStock(stockData);
         setInsight(insightData);
-        // 최근 본 종목에 추가
-        if (stockData) {
-          addRecent(stockData.stockCode, stockData.stockName);
-        }
       })
       .catch(() => setError('종목 정보를 불러올 수 없습니다'))
       .finally(() => setLoading(false));
-  }, [stockCode, addRecent]); // stockCode가 변경되면 다시 실행
+  }, [stockCode]); // stockCode가 변경되면 다시 실행
+
+  // ----------------------------------------------------------
+  // ⚡ useEffect: 최근 본 종목 기록 (stock 로딩 완료 후)
+  // ----------------------------------------------------------
+  useEffect(() => {
+    if (stock) {
+      addRecent(stock.stockCode, stock.stockName);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stock?.stockCode]); // stockCode가 변경될 때만 실행
 
   // ----------------------------------------------------------
   // 🔄 로딩 상태 렌더링
