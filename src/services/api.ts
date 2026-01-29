@@ -286,47 +286,6 @@ export async function getHomePicks(size = 8, preset = 'default'): Promise<HomePi
   return response.data;
 }
 
-// ------------------------------------------------------------
-// 기존 API 함수들 (하위 호환성)
-// ------------------------------------------------------------
-// 객체 형태로 여러 함수를 묶어서 내보내기
-// 사용: stockApi.getSectors() 형태로 호출
-export const stockApi = {
-  getMarketIndices: getMarketSummary,
-
-  getSectors: async () => {
-    const response = await api.get('/sectors');
-    return response.data;
-  },
-
-  getStocksBySector: async (sectorId?: string) => {
-    const params = sectorId ? { sector: sectorId } : {};
-    const response = await api.get('/stocks', { params });
-    return response.data;
-  },
-
-  getStock: async (code: string) => {
-    const response = await api.get(`/stocks/${code}`);
-    return response.data;
-  },
-
-  searchStocks: async (query: string) => {
-    const response = await api.get('/stocks/search', { params: { q: query } });
-    return response.data;
-  },
-
-  getNews: async (stockCode?: string) => {
-    const params = stockCode ? { code: stockCode } : {};
-    const response = await api.get('/news', { params });
-    return response.data;
-  },
-
-  getChartData: async (code: string, period: string = '1D') => {
-    const response = await api.get(`/stocks/${code}/chart`, { params: { period } });
-    return response.data;
-  },
-};
-
 // 기본 내보내기: api 인스턴스
 // 다른 곳에서 직접 axios 요청을 보낼 때 사용
 export default api;
