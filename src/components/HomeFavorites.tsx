@@ -46,11 +46,6 @@ function HomeFavorites() {
       .finally(() => setLoading(false));
   }, [favorites]);
 
-  // 즐겨찾기가 없으면 섹션 숨김
-  if (!loading && favorites.length === 0) {
-    return null;
-  }
-
   return (
     <section className="home-favorites">
       <div className="home-favorites__header">
@@ -66,9 +61,17 @@ function HomeFavorites() {
       </div>
 
       {/* 로딩 상태 */}
-      {loading && (
+      {loading && favorites.length > 0 && (
         <div className="home-favorites__loading">
           <SkeletonCard />
+        </div>
+      )}
+
+      {/* 즐겨찾기 없음 */}
+      {!loading && favorites.length === 0 && (
+        <div className="home-favorites__empty">
+          <Star size={24} />
+          <p>종목 상세에서 ⭐를 눌러 즐겨찾기에 추가해보세요</p>
         </div>
       )}
 
