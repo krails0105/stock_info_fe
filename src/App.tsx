@@ -22,6 +22,7 @@ import { Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import SectorDetailPage from './pages/SectorDetailPage';
 import StockDetailPage from './pages/StockDetailPage';
+import SearchPage from './pages/SearchPage';
 
 // ------------------------------------------------------------
 // 🏠 App 컴포넌트
@@ -45,6 +46,12 @@ function App() {
           예: http://localhost:5173/
         */}
         <Route path="/" element={<HomePage />} />
+
+        {/*
+          검색 페이지
+          예: /search
+        */}
+        <Route path="/search" element={<SearchPage />} />
 
         {/*
           동적 라우팅 (Dynamic Routing):

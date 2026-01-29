@@ -25,7 +25,8 @@ import type {
   SectorInsight,
   HomePicksResponse,
   ChartResponse,
-  ChartRange
+  ChartRange,
+  SearchResult
 } from '../types';
 
 
@@ -300,6 +301,46 @@ export async function getStockChart(stockCode: string, range: ChartRange = '1M')
     params: { range }
   });
   return response.data;
+}
+
+// ------------------------------------------------------------
+// 종목 검색
+// ------------------------------------------------------------
+/**
+ * 종목 검색 API
+ *
+ * @param keyword - 검색 키워드 (종목명 또는 코드)
+ * @returns SearchResult[] - 검색 결과 배열
+ */
+export async function searchStocks(keyword: string): Promise<SearchResult[]> {
+  if (!keyword.trim()) {
+    return [];
+  }
+
+  const response = await api.get('/stocks/search', {
+    params: { keyword: keyword.trim() },
+  });
+
+  // API 응답을 SearchResult 타입으로 변환
+  return response.data.map((item: {
+    code: string;
+    name: string;
+    score: number;
+    label: string;
+    price: number;
+    priceChange: string;
+    sectorName: string;
+    market?: string;
+  }) => ({
+    code: item.code,
+    name: item.name,
+    score: item.score,
+    label: item.label,
+    price: item.price,
+    priceChange: item.priceChange,
+    sectorName: item.sectorName,
+    market: item.market,
+  }));
 }
 
 // 기본 내보내기: api 인스턴스

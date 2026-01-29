@@ -17,6 +17,8 @@ import type { StockDetail, StockInsight } from '../types';
 import StockDetailSummary from '../components/StockDetailSummary';
 import StockPriceChart from '../components/StockPriceChart';
 import NewsHeadlineList from '../components/NewsHeadlineList';
+import FavoriteButton from '../components/FavoriteButton';
+import useRecents from '../hooks/useRecents';
 import './StockDetailPage.css';
 
 // ------------------------------------------------------------
@@ -32,6 +34,9 @@ function StockDetailPage() {
   const [insight, setInsight] = useState<StockInsight | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // 최근 본 종목 훅
+  const { addRecent } = useRecents();
 
   // ----------------------------------------------------------
   // ⚡ useEffect: 종목 데이터 로딩
@@ -52,10 +57,14 @@ function StockDetailPage() {
       .then(([stockData, insightData]) => {
         setStock(stockData);
         setInsight(insightData);
+        // 최근 본 종목에 추가
+        if (stockData) {
+          addRecent(stockData.stockCode, stockData.stockName);
+        }
       })
       .catch(() => setError('종목 정보를 불러올 수 없습니다'))
       .finally(() => setLoading(false));
-  }, [stockCode]); // stockCode가 변경되면 다시 실행
+  }, [stockCode, addRecent]); // stockCode가 변경되면 다시 실행
 
   // ----------------------------------------------------------
   // 🔄 로딩 상태 렌더링
@@ -121,6 +130,7 @@ function StockDetailPage() {
             <h1 className="stock-header__name">{stock.stockName}</h1>
             <span className="stock-header__code">{stock.stockCode}</span>
           </div>
+          <FavoriteButton stockCode={stock.stockCode} size="lg" />
         </div>
 
         {/* 가격 정보 */}

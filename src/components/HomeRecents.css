@@ -1,0 +1,119 @@
+/* src/components/HomeRecents.css */
+/* 홈 최근 본 종목 섹션 스타일 */
+
+.home-recents {
+  margin-bottom: var(--spacing-lg);
+}
+
+.home-recents__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-md);
+}
+
+.home-recents__title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.home-recents__title svg {
+  color: var(--accent-primary);
+}
+
+.home-recents__clear {
+  font-size: 13px;
+  color: var(--text-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.home-recents__clear:hover {
+  color: var(--color-danger);
+}
+
+/* 목록 */
+.home-recents__list {
+  display: flex;
+  gap: var(--spacing-sm);
+  overflow-x: auto;
+  padding-bottom: var(--spacing-xs);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.home-recents__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* 아이템 */
+.home-recents__item {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  text-decoration: none;
+  transition: var(--transition-fast);
+  min-width: 160px;
+}
+
+.home-recents__item:hover {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.home-recents__item-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-recents__item-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.home-recents__item-code {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.home-recents__item-time {
+  font-size: 11px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.home-recents__item-arrow {
+  color: var(--text-muted);
+  opacity: 0;
+  transition: var(--transition-fast);
+}
+
+.home-recents__item:hover .home-recents__item-arrow {
+  opacity: 1;
+  color: var(--accent-primary);
+}
+
+/* 더보기 */
+.home-recents__more {
+  margin-top: var(--spacing-xs);
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}

@@ -1,0 +1,67 @@
+/* src/components/FavoriteButton.css */
+/* 즐겨찾기 버튼 스타일 */
+
+.favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border-radius: var(--radius-md);
+}
+
+/* 크기별 스타일 */
+.favorite-button--sm {
+  padding: 4px;
+}
+
+.favorite-button--md {
+  padding: 6px;
+}
+
+.favorite-button--lg {
+  padding: 8px;
+}
+
+/* 호버 상태 */
+.favorite-button:hover {
+  color: var(--color-warning);
+  background: rgba(234, 179, 8, 0.1);
+}
+
+/* 활성 상태 */
+.favorite-button.active {
+  color: var(--color-warning);
+}
+
+.favorite-button.active:hover {
+  color: var(--color-warning);
+  background: rgba(234, 179, 8, 0.15);
+}
+
+/* 라벨 */
+.favorite-button__label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* 애니메이션 */
+@keyframes favorite-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.favorite-button.active svg {
+  animation: favorite-pop 0.3s ease-out;
+}

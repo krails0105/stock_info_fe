@@ -1,0 +1,214 @@
+/* src/pages/SearchPage.css */
+/* 검색 페이지 스타일 */
+
+.search-page {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+/* 헤더 */
+.search-page__header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md);
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-default);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.search-page__back {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-secondary);
+  border-radius: var(--radius-md);
+  transition: var(--transition-fast);
+}
+
+.search-page__back:hover {
+  background: var(--bg-muted);
+  color: var(--text-primary);
+}
+
+.search-page__input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-page__input-icon {
+  position: absolute;
+  left: var(--spacing-sm);
+  color: var(--text-muted);
+  pointer-events: none;
+}
+
+.search-page__input {
+  width: 100%;
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 40px;
+  font-size: 16px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: var(--transition-fast);
+}
+
+.search-page__input:focus {
+  outline: none;
+  border-color: var(--accent-primary);
+  box-shadow: 0 0 0 3px var(--accent-primary-light);
+}
+
+.search-page__input::placeholder {
+  color: var(--text-muted);
+}
+
+/* 콘텐츠 */
+.search-page__content {
+  padding: var(--spacing-md);
+}
+
+/* 추천 검색어 */
+.search-page__suggestions {
+  margin-top: var(--spacing-md);
+}
+
+.search-page__suggestions-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-page__suggestions-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-xs);
+}
+
+.search-page__suggestion-chip {
+  padding: var(--spacing-xs) var(--spacing-sm);
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.search-page__suggestion-chip:hover {
+  background: var(--accent-primary-light);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+}
+
+/* 로딩 */
+.search-page__loading {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+/* 검색 결과 */
+.search-page__results {
+  margin-top: var(--spacing-md);
+}
+
+.search-page__results-count {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-page__results-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 검색 결과 카드 */
+.search-result-card {
+  width: 100%;
+  padding: var(--spacing-md);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition-fast);
+}
+
+.search-result-card:hover {
+  border-color: var(--accent-primary);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.search-result-card__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.search-result-card__info {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+}
+
+.search-result-card__name {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.search-result-card__code {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.search-result-card__details {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+}
+
+.search-result-card__price,
+.search-result-card__sector {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+.search-result-card__price svg,
+.search-result-card__sector svg {
+  color: var(--text-muted);
+}
+
+.search-result-card__change {
+  font-weight: 500;
+}
+
+.search-result-card__change.up {
+  color: var(--color-up);
+}
+
+.search-result-card__change.down {
+  color: var(--color-down);
+}

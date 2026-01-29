@@ -2,12 +2,16 @@
 // 홈페이지 컴포넌트
 
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Search } from 'lucide-react';
 import { getSectorScoreboard } from '../services/api';
 import type { SectorScore } from '../types';
 import MarketSummaryBar from '../components/MarketSummaryBar';
 import SectorCard from '../components/SectorCard';
 import SectorListGrid from '../components/SectorListGrid';
 import HomeWatchlistPicks from '../components/HomeWatchlistPicks';
+import HomeFavorites from '../components/HomeFavorites';
+import HomeRecents from '../components/HomeRecents';
 import { SkeletonCard } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import './HomePage.css';
@@ -45,13 +49,29 @@ function HomePage() {
 
   return (
     <div className="home-page">
+      {/* 검색 바 */}
+      <Link to="/search" className="home-search-bar">
+        <Search size={18} />
+        <span>종목명 또는 종목코드 검색</span>
+      </Link>
+
       {/* 섹션 1: 시장 현황 */}
       <section className="section">
         <h2 className="section__title">시장 현황</h2>
         <MarketSummaryBar />
       </section>
 
-      {/* 섹션 2: 오늘 주목할 종목 */}
+      {/* 섹션 2: 내 즐겨찾기 */}
+      <section className="section">
+        <HomeFavorites />
+      </section>
+
+      {/* 섹션 3: 최근 본 종목 */}
+      <section className="section">
+        <HomeRecents />
+      </section>
+
+      {/* 섹션 4: 오늘 주목할 종목 */}
       <section className="section">
         <HomeWatchlistPicks />
       </section>
