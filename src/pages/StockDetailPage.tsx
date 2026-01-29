@@ -15,6 +15,7 @@ import { useParams, Link } from 'react-router-dom';
 import { getStockDetail, getStockInsight } from '../services/api';
 import type { StockDetail, StockInsight } from '../types';
 import StockDetailSummary from '../components/StockDetailSummary';
+import StockPriceChart from '../components/StockPriceChart';
 import NewsHeadlineList from '../components/NewsHeadlineList';
 import './StockDetailPage.css';
 
@@ -124,21 +125,15 @@ function StockDetailPage() {
 
         {/* 가격 정보 */}
         <div className="stock-header__price">
-          {/*
-            .toLocaleString(): 숫자를 천단위 쉼표가 있는 문자열로 변환
-            예: 72500 → "72,500"
-          */}
           <span className="price-value">{stock.closingPrice.toLocaleString()}원</span>
-
-          {/*
-            템플릿 리터럴로 클래스명 동적 생성
-            조건에 따라 'up' 또는 'down' 클래스 추가
-          */}
           <span className={`price-change ${isUp ? 'up' : ''} ${isDown ? 'down' : ''}`}>
             {priceChangeDisplay} ({changeRateDisplay})
           </span>
         </div>
       </header>
+
+      {/* ======== 가격 차트 ======== */}
+      <StockPriceChart stockCode={stock.stockCode} />
 
       {/* ======== 수익 지표 ======== */}
       <section className="stock-section">

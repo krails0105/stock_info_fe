@@ -23,7 +23,9 @@ import type {
   NewsItem,
   StockInsight,
   SectorInsight,
-  HomePicksResponse
+  HomePicksResponse,
+  ChartResponse,
+  ChartRange
 } from '../types';
 
 
@@ -282,6 +284,20 @@ export async function getSectorInsight(sectorName: string): Promise<SectorInsigh
 export async function getHomePicks(size = 8, preset = 'default'): Promise<HomePicksResponse> {
   const response = await api.get<HomePicksResponse>('/home/picks', {
     params: { size, preset }
+  });
+  return response.data;
+}
+
+/**
+ * 종목 차트 데이터 조회
+ *
+ * @param stockCode - 종목 코드 (예: "005930")
+ * @param range - 기간 ('1D' | '1W' | '1M' | '3M' | '1Y')
+ * @returns ChartResponse - 차트 데이터
+ */
+export async function getStockChart(stockCode: string, range: ChartRange = '1M'): Promise<ChartResponse> {
+  const response = await api.get<ChartResponse>(`/stocks/${stockCode}/chart`, {
+    params: { range }
   });
   return response.data;
 }
