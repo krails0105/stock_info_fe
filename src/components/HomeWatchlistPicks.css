@@ -1,66 +1,72 @@
 /* src/components/HomeWatchlistPicks.css */
-/* 홈 Watchlist Picks 컴포넌트 스타일 */
+/* 홈 Watchlist Picks (Fintech Clean 테마) */
 
 .watchlist-picks {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 /* 헤더 */
 .watchlist-picks__header {
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-md);
 }
 
 .watchlist-picks__title {
   font-size: 20px;
   font-weight: 700;
-  color: #1a1a1a;
-  margin: 0 0 4px 0;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-xs) 0;
 }
 
 .watchlist-picks__subtitle {
   font-size: 14px;
-  color: #64748b;
+  color: var(--text-muted);
   margin: 0;
 }
 
 /* 프리셋 탭 */
 .watchlist-picks__tabs {
   display: flex;
-  gap: 8px;
-  margin-bottom: 20px;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
 }
 
 .watchlist-picks__tab {
-  padding: 8px 16px;
-  border: 1px solid #e2e8f0;
-  border-radius: 20px;
-  background: white;
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  background: var(--bg-surface);
   font-size: 14px;
   font-weight: 500;
-  color: #64748b;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
 }
 
-.watchlist-picks__tab:hover {
-  border-color: #3b82f6;
-  color: #3b82f6;
+.watchlist-picks__tab:hover:not(:disabled) {
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
 }
 
 .watchlist-picks__tab.active {
-  background: #3b82f6;
-  border-color: #3b82f6;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
   color: white;
+}
+
+.watchlist-picks__tab:disabled {
+  opacity: 0.6;
+  cursor: default;
 }
 
 /* 카드 그리드 */
 .watchlist-picks__grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px;
+  gap: var(--spacing-md);
 }
 
 @media (max-width: 768px) {
@@ -71,18 +77,24 @@
 
 /* Pick 카드 */
 .pick-card {
-  background: #fafafa;
-  border: 1px solid #e2e8f0;
-  border-radius: 12px;
-  padding: 16px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all var(--transition-fast);
+  position: relative;
 }
 
 .pick-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  border-color: #cbd5e1;
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+}
+
+.pick-card:hover .pick-card__arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* 카드 헤더 */
@@ -90,7 +102,7 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
+  margin-bottom: var(--spacing-md);
 }
 
 .pick-card__info {
@@ -102,36 +114,37 @@
 .pick-card__name {
   font-size: 16px;
   font-weight: 600;
-  color: #1e293b;
+  color: var(--text-primary);
 }
 
 .pick-card__code {
   font-size: 12px;
-  color: #94a3b8;
+  color: var(--text-subtle);
+  font-variant-numeric: tabular-nums;
 }
 
 /* 배지 */
 .pick-card__badges {
   display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
 .pick-card__bucket {
   font-size: 11px;
   font-weight: 600;
   padding: 3px 8px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .pick-card__bucket.stable {
-  background: #dcfce7;
-  color: #166534;
+  background: var(--color-success-bg);
+  color: #047857;
 }
 
 .pick-card__bucket.representative {
-  background: #dbeafe;
-  color: #1e40af;
+  background: var(--accent-primary-light);
+  color: var(--accent-primary);
 }
 
 .pick-card__bucket.momentum {
@@ -140,12 +153,12 @@
 }
 
 .pick-card__bucket.value {
-  background: #fef3c7;
+  background: var(--color-warning-bg);
   color: #92400e;
 }
 
 .pick-card__bucket.news {
-  background: #fee2e2;
+  background: var(--color-danger-bg);
   color: #991b1b;
 }
 
@@ -153,46 +166,75 @@
   font-size: 11px;
   font-weight: 500;
   padding: 3px 8px;
-  border-radius: 4px;
-  background: #f1f5f9;
-  color: #475569;
+  border-radius: var(--radius-sm);
+  background: var(--bg-surface);
+  color: var(--text-secondary);
 }
 
 /* 이유 목록 */
 .pick-card__reasons {
   list-style: none;
   padding: 0;
-  margin: 0 0 8px 0;
+  margin: 0 0 var(--spacing-sm) 0;
 }
 
 .pick-card__reasons li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
   font-size: 13px;
-  color: #374151;
+  color: var(--text-secondary);
   line-height: 1.5;
-  margin-bottom: 4px;
+  margin-bottom: var(--spacing-xs);
+}
+
+.pick-card__reason-icon {
+  flex-shrink: 0;
+  color: var(--color-success);
+  margin-top: 2px;
 }
 
 /* 주의사항 */
 .pick-card__caution {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
   font-size: 12px;
   color: #92400e;
-  background: #fffbeb;
-  padding: 8px 10px;
-  border-radius: 6px;
+  background: var(--color-warning-bg);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-md);
   border: 1px solid #fde68a;
+}
+
+.pick-card__caution-icon {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* 더보기 화살표 */
+.pick-card__arrow {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateX(-8px);
+  opacity: 0;
+  color: var(--text-muted);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  margin-top: -8px;
 }
 
 /* 로딩 */
 .watchlist-picks .loading {
   text-align: center;
-  padding: 40px;
-  color: #64748b;
+  padding: var(--spacing-2xl);
+  color: var(--text-muted);
 }
 
 /* 반응형 */
 @media (max-width: 640px) {
   .watchlist-picks {
-    padding: 16px;
+    padding: var(--spacing-md);
   }
 
   .watchlist-picks__title {
@@ -204,12 +246,12 @@
   }
 
   .watchlist-picks__tab {
-    padding: 6px 12px;
+    padding: var(--spacing-xs) var(--spacing-md);
     font-size: 13px;
   }
 
   .pick-card {
-    padding: 14px;
+    padding: var(--spacing-md);
   }
 
   .pick-card__name {

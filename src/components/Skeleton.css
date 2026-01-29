@@ -1,0 +1,96 @@
+/* src/components/Skeleton.css */
+/* Skeleton 로딩 컴포넌트 스타일 */
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface-2) 25%,
+    #e2e8f0 50%,
+    var(--bg-surface-2) 75%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton--text {
+  border-radius: var(--radius-sm);
+}
+
+.skeleton--rectangular {
+  border-radius: var(--radius-md);
+}
+
+.skeleton--circular {
+  border-radius: var(--radius-full);
+}
+
+/* 카드 스켈레톤 프리셋 */
+.skeleton-card {
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-default);
+}
+
+.skeleton-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-card__line {
+  margin-top: var(--spacing-sm);
+}
+
+/* 마켓 아이템 스켈레톤 */
+.skeleton-market-item {
+  flex: 1;
+  min-width: 120px;
+  padding: var(--spacing-md);
+  background: var(--bg-surface-2);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* 픽 카드 스켈레톤 */
+.skeleton-pick-card {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-md);
+}
+
+.skeleton-pick-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-pick-card__header > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.skeleton-pick-card__badges {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-pick-card > .skeleton--text {
+  margin-top: var(--spacing-xs);
+}

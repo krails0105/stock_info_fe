@@ -1,58 +1,62 @@
 /* src/components/ScoreBadge.css */
+/* 점수 배지 (Fintech Clean 테마) */
 
 .score-badge {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 20px;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
   font-weight: 600;
 }
 
+/* 사이즈 */
 .score-badge--sm {
-  padding: 4px 8px;
+  padding: 3px var(--spacing-sm);
   font-size: 12px;
-  gap: 4px;
+  gap: var(--spacing-xs);
 }
 
 .score-badge--md {
-  padding: 6px 12px;
+  padding: var(--spacing-xs) var(--spacing-md);
   font-size: 14px;
 }
 
 .score-badge--lg {
-  padding: 8px 16px;
+  padding: var(--spacing-sm) var(--spacing-lg);
   font-size: 16px;
 }
 
 .score-badge__score {
   font-weight: 700;
+  font-variant-numeric: tabular-nums;
 }
 
 .score-badge__label {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: var(--spacing-xs);
 }
 
 .score-badge__icon {
   font-size: 10px;
+  line-height: 1;
 }
 
-/* STRONG - 강세 (초록) */
+/* STRONG - 강세 */
 .score-badge--strong {
-  background: #dcfce7;
-  color: #16a34a;
+  background: var(--color-success-bg);
+  color: var(--color-success);
 }
 
-/* NEUTRAL - 보통 (노랑) */
+/* NEUTRAL - 보통 */
 .score-badge--neutral {
-  background: #fef9c3;
-  color: #ca8a04;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
 }
 
-/* WEAK - 약세 (빨강) */
+/* WEAK - 약세 */
 .score-badge--weak {
-  background: #fee2e2;
-  color: #dc2626;
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
 }

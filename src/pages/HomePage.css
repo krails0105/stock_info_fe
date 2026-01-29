@@ -1,48 +1,73 @@
 /* src/pages/HomePage.css */
+/* 홈페이지 레이아웃 (Fintech Clean 테마) */
 
 .home-page {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 16px;
+  padding: var(--spacing-xl) var(--spacing-md);
 }
 
+/* 섹션 간격 (충분한 여백) */
 .section {
-  margin-bottom: 32px;
+  margin-bottom: var(--spacing-2xl);
 }
 
+/* 섹션 제목 */
 .section__title {
-  margin: 0 0 16px 0;
-  font-size: 20px;
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: 22px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
+/* TOP 3 섹터 그리드 */
 .hot-sectors {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--spacing-lg);
 }
 
+/* 로딩/에러 상태 */
 .loading,
 .error {
-  padding: 40px;
+  padding: var(--spacing-2xl);
   text-align: center;
-  background: #fff;
-  border-radius: 12px;
-  color: #6b7280;
+  background: var(--bg-surface);
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--border-default);
+  color: var(--text-muted);
 }
 
 .error {
-  color: #dc2626;
-  background: #fef2f2;
+  color: var(--color-danger);
+  background: var(--color-danger-bg);
+  border-color: transparent;
 }
 
+/* 스켈레톤 로딩 컨테이너 */
+.skeleton-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+/* 반응형 */
 @media (max-width: 768px) {
   .home-page {
-    padding: 16px 12px;
+    padding: var(--spacing-lg) var(--spacing-md);
   }
 
-  .hot-sectors {
+  .section {
+    margin-bottom: var(--spacing-xl);
+  }
+
+  .section__title {
+    font-size: 20px;
+  }
+
+  .hot-sectors,
+  .skeleton-grid {
     grid-template-columns: 1fr;
   }
 }

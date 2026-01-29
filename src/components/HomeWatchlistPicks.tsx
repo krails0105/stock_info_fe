@@ -1,14 +1,13 @@
 // src/components/HomeWatchlistPicks.tsx
-// ============================================================
 // 홈 Watchlist Picks 컴포넌트
-// "오늘 주목할 종목" 5~10개를 보여주는 섹션
-// ============================================================
 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Check, AlertTriangle, ChevronRight } from 'lucide-react';
 import { getHomePicks } from '../services/api';
 import type { StockPickCard, HomePicksResponse, PickBucket } from '../types';
 import ScoreBadge from './ScoreBadge';
+import { SkeletonPickCard } from './Skeleton';
 import './HomeWatchlistPicks.css';
 
 // 프리셋 탭 옵션
@@ -48,11 +47,32 @@ function HomeWatchlistPicks() {
     navigate(`/stock/${code}`);
   };
 
-  // 로딩 중
+  // 로딩 중: Skeleton
   if (loading) {
     return (
       <div className="watchlist-picks">
-        <div className="loading">로딩 중...</div>
+        <div className="watchlist-picks__header">
+          <h2 className="watchlist-picks__title">오늘 주목할 종목</h2>
+          <p className="watchlist-picks__subtitle">
+            오늘 볼 만한 종목을 초보자 관점으로 추렸어요
+          </p>
+        </div>
+        <div className="watchlist-picks__tabs">
+          {PRESET_TABS.map((tab) => (
+            <button
+              key={tab.value}
+              className={`watchlist-picks__tab ${preset === tab.value ? 'active' : ''}`}
+              disabled
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+        <div className="watchlist-picks__grid">
+          {[1, 2, 3, 4].map((i) => (
+            <SkeletonPickCard key={i} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -113,16 +133,25 @@ function HomeWatchlistPicks() {
             {/* 이유 목록 (2개) */}
             <ul className="pick-card__reasons">
               {item.reasons.map((reason, idx) => (
-                <li key={idx}>✅ {reason}</li>
+                <li key={idx}>
+                  <Check size={14} className="pick-card__reason-icon" />
+                  {reason}
+                </li>
               ))}
             </ul>
 
             {/* 주의사항 (있을 때만) */}
             {item.caution && (
               <div className="pick-card__caution">
-                ⚠️ {item.caution}
+                <AlertTriangle size={14} className="pick-card__caution-icon" />
+                {item.caution}
               </div>
             )}
+
+            {/* 더보기 화살표 */}
+            <div className="pick-card__arrow">
+              <ChevronRight size={16} />
+            </div>
           </div>
         ))}
       </div>

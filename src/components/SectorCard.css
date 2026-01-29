@@ -1,100 +1,140 @@
 /* src/components/SectorCard.css */
+/* 섹터 카드 (Fintech Clean 테마) */
 
 .sector-card {
   display: block;
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
   text-decoration: none;
   color: inherit;
-  transition: transform 0.15s, box-shadow 0.15s;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
   position: relative;
 }
 
 .sector-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
 }
 
+.sector-card:hover .sector-card__arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* 순위 배지 */
 .sector-card__rank {
   position: absolute;
-  top: -8px;
-  left: -8px;
-  width: 32px;
-  height: 32px;
-  background: #3b82f6;
-  color: #fff;
-  border-radius: 50%;
+  top: -10px;
+  left: -10px;
+  width: 36px;
+  height: 36px;
+  background: var(--accent-primary);
+  color: white;
+  border-radius: var(--radius-full);
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 14px;
+  box-shadow: var(--shadow-md);
 }
 
+/* 헤더 */
 .sector-card__header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 12px;
-  gap: 12px;
+  margin-bottom: var(--spacing-md);
+  gap: var(--spacing-md);
 }
 
 .sector-card__name {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
 }
 
+/* 표본 적음 배지 */
+.sector-card__low-sample-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  background-color: var(--color-warning-bg);
+  color: #92400e;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--spacing-md);
+}
+
+/* 이유 목록 */
 .sector-card__reasons {
-  margin: 0 0 12px 0;
-  padding-left: 18px;
-  color: #4b5563;
+  margin: 0 0 var(--spacing-md) 0;
+  padding: 0;
+  list-style: none;
+  color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.6;
 }
 
 .sector-card__reasons li {
-  margin-bottom: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xs);
 }
 
+.sector-card__reason-icon {
+  flex-shrink: 0;
+  color: var(--color-success);
+  margin-top: 3px;
+}
+
+/* 헤드라인 */
 .sector-card__headlines {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding-top: 12px;
-  border-top: 1px solid #e5e7eb;
+  gap: var(--spacing-sm);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-default);
 }
 
 .sector-card__headline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-muted);
   text-decoration: none;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color var(--transition-fast);
 }
 
 .sector-card__headline:hover {
-  color: #3b82f6;
-  text-decoration: underline;
+  color: var(--accent-primary);
 }
 
-.sector-card__headline::before {
-  content: '📰 ';
-  font-size: 12px;
+.sector-card__headline-icon {
+  flex-shrink: 0;
+  opacity: 0.6;
 }
 
-/* P0-1: 표본 적음 경고 배지 */
-.sector-card__low-sample-badge {
-  display: inline-block;
-  background-color: #fef3c7;
-  color: #92400e;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 2px 8px;
-  border-radius: 4px;
-  margin-top: 8px;
+/* 더보기 화살표 */
+.sector-card__arrow {
+  position: absolute;
+  right: var(--spacing-md);
+  top: 50%;
+  transform: translateX(-8px);
+  opacity: 0;
+  color: var(--text-muted);
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+  margin-top: -9px;
 }

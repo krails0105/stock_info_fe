@@ -1,76 +1,98 @@
 /* src/components/SectorListGrid.css */
+/* 섹터 리스트 그리드 (Fintech Clean 테마) */
 
 .sector-grid {
-  background: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: var(--bg-surface);
+  border-radius: var(--radius-2xl);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .sector-grid__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 16px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .sector-grid__title {
   margin: 0;
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: var(--text-primary);
 }
 
 .sector-grid__sort {
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .sort-btn {
-  padding: 6px 12px;
-  border: 1px solid #e5e7eb;
-  border-radius: 6px;
-  background: #fff;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  background: var(--bg-surface);
   font-size: 13px;
-  color: #6b7280;
+  color: var(--text-muted);
   cursor: pointer;
-  transition: all 0.15s;
+  transition: all var(--transition-fast);
 }
 
 .sort-btn:hover {
-  background: #f9fafb;
+  background: var(--bg-surface-2);
+  border-color: var(--border-hover);
 }
 
 .sort-btn--active {
-  background: #3b82f6;
-  border-color: #3b82f6;
-  color: #fff;
+  background: var(--accent-primary);
+  border-color: var(--accent-primary);
+  color: white;
 }
 
 .sector-grid__list {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: var(--spacing-md);
 }
 
 .sector-grid__item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 16px;
-  background: #f9fafb;
-  border-radius: 8px;
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--bg-surface-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
   text-decoration: none;
   color: inherit;
-  transition: background 0.15s;
+  transition: all var(--transition-fast);
 }
 
 .sector-grid__item:hover {
-  background: #f3f4f6;
+  background: var(--bg-surface);
+  border-color: var(--border-default);
+  box-shadow: var(--shadow-sm);
 }
 
 .sector-grid__item-name {
   font-size: 14px;
   font-weight: 500;
-  color: #374151;
+  color: var(--text-secondary);
+}
+
+/* 반응형 */
+@media (max-width: 640px) {
+  .sector-grid {
+    padding: var(--spacing-md);
+  }
+
+  .sector-grid__list {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .sector-grid__item {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
 }
