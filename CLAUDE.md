@@ -21,14 +21,15 @@ npm run preview   # Preview production build
 - React Router DOM 7 for routing
 - Axios for API calls
 - Tailwind CSS 4 for styling
-- Recharts for charts (planned)
+- Recharts for charts
 
 ## Architecture
 
 **Routing (App.tsx):**
-- `/` → HomePage (market indices + sector list)
+- `/` → HomePage (market indices + sector list + favorites + recents)
+- `/search` → SearchPage (종목 검색)
 - `/sector/:sectorName` → SectorDetailPage (sector stocks)
-- `/stock/:stockCode` → StockDetailPage (financial metrics)
+- `/stock/:stockCode` → StockDetailPage (financial metrics + favorite button)
 
 **API Layer (src/services/api.ts):**
 - Axios instance with base URL from `VITE_API_URL` (default: `http://localhost:8080/api`)
@@ -40,11 +41,19 @@ npm run preview   # Preview production build
 - `getSectorScoreboard()` - Sector list with scores
 - `getStockScoreboard(sectorName)` - Stocks by sector
 - `getStockDetail(code)` - Stock financial metrics (KrxStockFinancialItem)
+- `getStockChart(code, range)` - Chart data (1D/1W/1M/3M/1Y)
+- `searchStocks(keyword)` - 종목 검색
 - `getNews(params)` - News articles
 
 **State Management:**
 - React local state (useState/useEffect) per component
 - No centralized store; components fetch data directly
+
+**Custom Hooks (src/hooks/):**
+- `useDebounce(value, delay)` - 입력 디바운스 (300ms)
+- `useLocalStorage(key, initial)` - LocalStorage 영속화
+- `useFavorites()` - 즐겨찾기 관리 (stockinfo:favorites:v1)
+- `useRecents()` - 최근 본 종목 관리 (stockinfo:recents:v1)
 
 ## Project Structure
 
@@ -55,9 +64,21 @@ src/
 │   ├── SectorCard.tsx         # Sector score card
 │   ├── SectorListGrid.tsx     # Sector grid layout
 │   ├── StockRankingTable.tsx  # Stock list table
-│   └── ScoreBadge.tsx         # Score label component
+│   ├── ScoreBadge.tsx         # Score label component
+│   ├── StockPriceChart.tsx    # 종목 차트 (Recharts)
+│   ├── FavoriteButton.tsx     # 즐겨찾기 토글 버튼
+│   ├── HomeFavorites.tsx      # 홈 즐겨찾기 섹션
+│   ├── HomeRecents.tsx        # 홈 최근 본 섹션
+│   ├── Skeleton.tsx           # 로딩 스켈레톤
+│   └── EmptyState.tsx         # 빈 상태 UI
+├── hooks/           # Custom hooks
+│   ├── useDebounce.ts         # 디바운스 훅
+│   ├── useLocalStorage.ts     # LocalStorage 훅
+│   ├── useFavorites.ts        # 즐겨찾기 훅
+│   └── useRecents.ts          # 최근 본 종목 훅
 ├── pages/
 │   ├── HomePage.tsx           # Main page
+│   ├── SearchPage.tsx         # 종목 검색 페이지
 │   ├── SectorDetailPage.tsx   # Sector stocks page
 │   └── StockDetailPage.tsx    # Stock financial metrics page
 ├── services/api.ts  # Axios config + API functions
