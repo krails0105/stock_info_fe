@@ -3,6 +3,7 @@
 
 .market-bar {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
   background: var(--bg-surface);
@@ -10,6 +11,15 @@
   border: 1px solid var(--border-default);
   box-shadow: var(--shadow-sm);
   overflow-x: auto;
+}
+
+.market-bar__meta {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: var(--spacing-xs);
+  padding-bottom: var(--spacing-xs);
+  border-bottom: 1px solid var(--border-default);
 }
 
 .market-bar--loading {

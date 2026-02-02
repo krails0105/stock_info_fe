@@ -29,6 +29,14 @@
   margin-bottom: 24px;
 }
 
+/* 신뢰 메타 */
+.stock-detail-page__trust-meta {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--spacing-sm) 0;
+  margin-bottom: var(--spacing-md);
+}
+
 /* ======== 헤더 ======== */
 .stock-header {
   background: #fff;

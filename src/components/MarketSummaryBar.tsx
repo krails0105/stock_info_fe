@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { TrendingUp, TrendingDown, Minus } from 'lucide-react';
 import { getMarketSummary } from '../services/api';
 import type { MarketSummary } from '../types';
+import TrustMeta from './TrustMeta';
 import { SkeletonMarketItem } from './Skeleton';
 import './MarketSummaryBar.css';
 
@@ -12,10 +13,14 @@ function MarketSummaryBar() {
   const [indices, setIndices] = useState<MarketSummary[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [fetchedAt, setFetchedAt] = useState<string | null>(null);
 
   useEffect(() => {
     getMarketSummary()
-      .then(setIndices)
+      .then((data) => {
+        setIndices(data);
+        setFetchedAt(new Date().toISOString());
+      })
       .catch(() => setError('시장 데이터를 불러올 수 없습니다'))
       .finally(() => setLoading(false));
   }, []);
@@ -39,6 +44,9 @@ function MarketSummaryBar() {
 
   return (
     <div className="market-bar">
+      <div className="market-bar__meta">
+        <TrustMeta asOf={fetchedAt ?? undefined} source="KRX" />
+      </div>
       {indices.map((item) => {
         const isUp = item.changePercent > 0;
         const isDown = item.changePercent < 0;

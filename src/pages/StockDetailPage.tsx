@@ -18,6 +18,7 @@ import StockDetailSummary from '../components/StockDetailSummary';
 import StockPriceChart from '../components/StockPriceChart';
 import NewsHeadlineList from '../components/NewsHeadlineList';
 import FavoriteButton from '../components/FavoriteButton';
+import TrustMeta from '../components/TrustMeta';
 import useRecents from '../hooks/useRecents';
 import './StockDetailPage.css';
 
@@ -121,6 +122,17 @@ function StockDetailPage() {
       {/* ======== 10초 요약 인사이트 ======== */}
       {insight && (
         <StockDetailSummary insight={insight} />
+      )}
+
+      {/* 신뢰 메타 (인사이트 있을 때) */}
+      {insight && (
+        <div className="stock-detail-page__trust-meta">
+          <TrustMeta
+            asOf={insight.meta.asOf}
+            source={insight.meta.sources?.join(', ')}
+            coverage={insight.meta.coverage}
+          />
+        </div>
       )}
 
       {/* ======== 뉴스 헤드라인 ======== */}

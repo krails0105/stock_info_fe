@@ -1,0 +1,53 @@
+/* src/components/TrustMeta.css */
+/* 신뢰 메타 스타일 */
+
+.trust-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  color: var(--text-muted);
+  cursor: default;
+}
+
+.trust-meta--sm {
+  font-size: 11px;
+}
+
+.trust-meta--md {
+  font-size: 12px;
+}
+
+.trust-meta__icon {
+  flex-shrink: 0;
+  opacity: 0.6;
+}
+
+.trust-meta__text {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.trust-meta__time {
+  font-variant-numeric: tabular-nums;
+}
+
+.trust-meta__source {
+  color: var(--text-subtle);
+}
+
+.trust-meta__source::before {
+  content: '·';
+  margin-right: 4px;
+}
+
+.trust-meta__coverage {
+  color: var(--color-warning);
+  font-weight: 500;
+}
+
+.trust-meta__coverage::before {
+  content: '·';
+  margin-right: 4px;
+  color: var(--text-subtle);
+}

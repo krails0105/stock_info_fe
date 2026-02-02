@@ -1,32 +1,41 @@
 // src/pages/HomePage.tsx
 // 홈페이지 컴포넌트
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import { getSectorScoreboard } from '../services/api';
-import type { SectorScore } from '../types';
+import { getSectorScoreboard, getHomePicks } from '../services/api';
+import type { SectorScore, HomePicksResponse } from '../types';
 import MarketSummaryBar from '../components/MarketSummaryBar';
 import SectorCard from '../components/SectorCard';
 import SectorListGrid from '../components/SectorListGrid';
 import HomeWatchlistPicks from '../components/HomeWatchlistPicks';
 import HomeFavorites from '../components/HomeFavorites';
 import HomeRecents from '../components/HomeRecents';
+import HomeObservationBar from '../components/HomeObservationBar';
+import HomeSectorFavorites from '../components/HomeSectorFavorites';
 import { SkeletonCard } from '../components/Skeleton';
 import EmptyState from '../components/EmptyState';
 import './HomePage.css';
 
 function HomePage() {
   const [sectors, setSectors] = useState<SectorScore[]>([]);
+  const [picks, setPicks] = useState<HomePicksResponse | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = () => {
+  const fetchData = useCallback(() => {
     setLoading(true);
     setError(null);
-    getSectorScoreboard()
-      .then((data) => {
-        setSectors(data.sectors);
+
+    // 섹터 데이터 + picks 동시 조회
+    Promise.all([
+      getSectorScoreboard(),
+      getHomePicks(8, 'default').catch(() => null),
+    ])
+      .then(([sectorData, picksData]) => {
+        setSectors(sectorData.sectors);
+        setPicks(picksData);
       })
       .catch(() => {
         setError('섹터 데이터를 불러올 수 없습니다');
@@ -34,11 +43,11 @@ function HomePage() {
       .finally(() => {
         setLoading(false);
       });
-  };
+  }, []);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   // TOP 3 섹터 계산 (표본 수 5개 이상)
   const MIN_SAMPLE_SIZE_FOR_TOP3 = 5;
@@ -54,6 +63,14 @@ function HomePage() {
         <Search size={18} />
         <span>종목명 또는 종목코드 검색</span>
       </Link>
+
+      {/* 섹션 0: 오늘 관찰 포인트 */}
+      <HomeObservationBar sectors={sectors} picks={picks} loading={loading} />
+
+      {/* 섹션 0-1: 내 관심 섹터 */}
+      <section className="section">
+        <HomeSectorFavorites sectors={sectors} maxDisplay={5} />
+      </section>
 
       {/* 섹션 1: 시장 현황 */}
       <section className="section">

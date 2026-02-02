@@ -1,0 +1,73 @@
+/* src/components/SectorFavoriteButton.css */
+/* 섹터 즐겨찾기 버튼 스타일 */
+
+.sector-favorite-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-xs);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition-fast);
+  border-radius: var(--radius-md);
+}
+
+/* 크기별 스타일 */
+.sector-favorite-button--sm {
+  padding: 4px;
+}
+
+.sector-favorite-button--md {
+  padding: 6px;
+}
+
+.sector-favorite-button--lg {
+  padding: 8px;
+}
+
+/* 호버 상태 */
+.sector-favorite-button:hover {
+  color: var(--accent-primary);
+  background: var(--accent-primary-light);
+}
+
+/* 활성 상태 */
+.sector-favorite-button.active {
+  color: var(--accent-primary);
+}
+
+.sector-favorite-button.active:hover {
+  color: var(--accent-primary-hover);
+  background: var(--accent-primary-light);
+}
+
+/* 포커스 상태 */
+.sector-favorite-button:focus-visible {
+  outline: 2px solid var(--accent-primary);
+  outline-offset: 2px;
+}
+
+/* 라벨 */
+.sector-favorite-button__label {
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* 애니메이션 */
+@keyframes sector-favorite-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.sector-favorite-button.active svg {
+  animation: sector-favorite-pop 0.3s ease-out;
+}

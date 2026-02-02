@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Check, AlertTriangle, ExternalLink, ChevronRight } from 'lucide-react';
 import type { SectorScore } from '../types';
 import ScoreBadge from './ScoreBadge';
+import SectorFavoriteButton from './SectorFavoriteButton';
 import './SectorCard.css';
 
 interface SectorCardProps {
@@ -21,10 +22,11 @@ function SectorCard({ sector, rank }: SectorCardProps) {
       {/* 순위 배지 */}
       {rank && <div className="sector-card__rank">#{rank}</div>}
 
-      {/* 헤더: 섹터명 + 점수 배지 */}
+      {/* 헤더: 섹터명 + 점수 배지 + 즐겨찾기 */}
       <div className="sector-card__header">
         <h3 className="sector-card__name">{sector.sectorName}</h3>
         <ScoreBadge score={sector.score} label={sector.label} />
+        <SectorFavoriteButton sectorName={sector.sectorName} size="sm" />
       </div>
 
       {/* 표본 적음 경고 배지 */}

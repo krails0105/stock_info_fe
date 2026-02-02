@@ -54,6 +54,7 @@ npm run preview   # Preview production build
 - `useLocalStorage(key, initial)` - LocalStorage 영속화
 - `useFavorites()` - 즐겨찾기 관리 (stockinfo:favorites:v1)
 - `useRecents()` - 최근 본 종목 관리 (stockinfo:recents:v1)
+- `useSectorFavorites()` - 섹터 즐겨찾기 관리 (stockinfo:favoriteSectors:v1)
 
 ## Project Structure
 
@@ -66,15 +67,20 @@ src/
 │   ├── StockRankingTable.tsx  # Stock list table
 │   ├── ScoreBadge.tsx         # Score label component
 │   ├── StockPriceChart.tsx    # 종목 차트 (Recharts)
-│   ├── FavoriteButton.tsx     # 즐겨찾기 토글 버튼
-│   ├── HomeFavorites.tsx      # 홈 즐겨찾기 섹션
+│   ├── FavoriteButton.tsx     # 종목 즐겨찾기 토글 버튼
+│   ├── SectorFavoriteButton.tsx # 섹터 즐겨찾기 토글 버튼
+│   ├── HomeFavorites.tsx      # 홈 종목 즐겨찾기 섹션
+│   ├── HomeSectorFavorites.tsx # 홈 관심 섹터 섹션
 │   ├── HomeRecents.tsx        # 홈 최근 본 섹션
+│   ├── HomeObservationBar.tsx # 오늘 관찰 포인트 (1줄 인사이트)
+│   ├── TrustMeta.tsx          # 신뢰 메타 (기준시각/출처)
 │   ├── Skeleton.tsx           # 로딩 스켈레톤
 │   └── EmptyState.tsx         # 빈 상태 UI
 ├── hooks/           # Custom hooks
 │   ├── useDebounce.ts         # 디바운스 훅
 │   ├── useLocalStorage.ts     # LocalStorage 훅
-│   ├── useFavorites.ts        # 즐겨찾기 훅
+│   ├── useFavorites.ts        # 종목 즐겨찾기 훅
+│   ├── useSectorFavorites.ts  # 섹터 즐겨찾기 훅
 │   └── useRecents.ts          # 최근 본 종목 훅
 ├── pages/
 │   ├── HomePage.tsx           # Main page

@@ -13,6 +13,7 @@ import {
 import { TrendingUp, AlertCircle, RefreshCw } from 'lucide-react';
 import { getStockChart } from '../services/api';
 import type { ChartResponse, ChartRange, ChartDataPoint } from '../types';
+import TrustMeta from './TrustMeta';
 import './StockPriceChart.css';
 
 interface StockPriceChartProps {
@@ -228,7 +229,7 @@ function StockPriceChart({ stockCode }: StockPriceChartProps) {
       </div>
 
       <div className="stock-chart__meta">
-        기준: {new Date(data.meta.asOf).toLocaleString('ko-KR')} · 출처: {data.meta.source}
+        <TrustMeta asOf={data.meta.asOf} source={data.meta.source} size="md" />
       </div>
     </div>
   );

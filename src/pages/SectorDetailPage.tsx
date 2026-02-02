@@ -53,6 +53,8 @@ import ScoreBadge from '../components/ScoreBadge';
 import StockRankingTable from '../components/StockRankingTable';
 import SectorTopPicks from '../components/SectorTopPicks';
 import NewsHeadlineList from '../components/NewsHeadlineList';
+import SectorFavoriteButton from '../components/SectorFavoriteButton';
+import TrustMeta from '../components/TrustMeta';
 
 // CSS
 import './SectorDetailPage.css';
@@ -261,7 +263,17 @@ function SectorDetailPage() {
         <div className="sector-detail__title-row">
           <h1 className="sector-detail__name">{sector.sectorName}</h1>
           <ScoreBadge score={sector.score} label={sector.label} size="lg" />
+          <SectorFavoriteButton sectorName={sector.sectorName} size="lg" showLabel />
         </div>
+
+        {/* 신뢰 메타 */}
+        {insight && (
+          <TrustMeta
+            asOf={insight.meta.asOf}
+            source={insight.meta.sources?.join(', ')}
+            coverage={insight.meta.coverage}
+          />
+        )}
 
         {/* 이유 목록 */}
         <ul className="sector-detail__reasons">
